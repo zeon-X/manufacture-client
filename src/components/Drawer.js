@@ -11,10 +11,12 @@ const Drawer = ({ children }) => {
         <div className="drawer-content flex flex-col">
           {/* <!-- Navbar --> */}
           <Header></Header>
-          {/* <!-- Page content here --> */}
-          {children}
-          {/* <!-- Footer --> */}
-          <Footer></Footer>
+          <div className="relative">
+            {/* <!-- Page content here --> */}
+            {children}
+            {/* <!-- Footer --> */}
+            <Footer></Footer>
+          </div>
         </div>
 
         {/* drawer for mobile */}

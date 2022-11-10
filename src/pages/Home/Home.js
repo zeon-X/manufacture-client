@@ -7,7 +7,7 @@ import HomeSection5 from "./HomeSection5";
 
 const Home = () => {
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center lg:px-20 py-16 sm:px-8">
       <HomeSection1></HomeSection1>
       <HomeSection2></HomeSection2>
       <HomeSection3></HomeSection3>

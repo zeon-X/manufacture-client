@@ -26,7 +26,7 @@ module.exports = {
           "base-100": "#FFFFFF",
           info: "#0072F5",
           success: "#079500",
-          warning: "red",
+          warning: "#F1AC06",
           error: "#DE1B8D",
         },
       },
