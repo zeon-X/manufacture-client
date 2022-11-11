@@ -7,7 +7,11 @@ const HomeSection4 = () => {
     {
       img: "https://m.media-amazon.com/images/I/71qG13eFwtL.jpg",
       title: "Las Hot Palabras",
-      gallary_img: [],
+      gallary_img: [
+        "https://m.media-amazon.com/images/I/71qG13eFwtL.jpg",
+        "https://m.media-amazon.com/images/I/71qG13eFwtL.jpg",
+        "https://m.media-amazon.com/images/I/71qG13eFwtL.jpg",
+      ],
       unit_price: 1900,
       description:
         "Wholesale mobile phone charger dual power adapter fast USB charger Type C 18W PD 20W charger for Iphone 11 12",

@@ -11,7 +11,7 @@ const Header = () => {
   const navigate = useNavigate();
   const [user, loading, error] = useAuthState(auth);
   const userInfo = JSON.parse(localStorage.getItem("user"));
-  console.log(userInfo?.role);
+  // console.log(userInfo?.role);
   const logout = () => {
     LogoutFunc(auth);
     Swal.fire({
@@ -172,7 +172,7 @@ const Header = () => {
                     onClick={() => navigate("/dashboard")}
                     className="justify-between"
                   >
-                    Dashboard
+                    Professional Dashboard
                     <span className="badge">{userInfo?.role}</span>
                   </a>
                 </li>
@@ -192,6 +192,11 @@ const Header = () => {
                   <a onClick={() => navigate("/orders")}>My Orders</a>
                 </li>
               )}
+              {user && userInfo?.role == "user" && (
+                <li>
+                  <a onClick={() => navigate("/reviews")}>My Reviews</a>
+                </li>
+              )}
               {user && (
                 <li>
                   <a onClick={logout}>Logout</a>
@@ -200,7 +205,7 @@ const Header = () => {
             </ul>
           </div>
           {/* purchase */}
-          <div className="dropdown dropdown-end">
+          {/* <div className="dropdown dropdown-end">
             <label tabIndex={2} className="btn btn-ghost btn-circle">
               <div className="indicator">
                 <svg
@@ -235,7 +240,7 @@ const Header = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

@@ -87,34 +87,13 @@ const ProductDetails1 = () => {
             alt=""
           />
           <div className="grid grid-cols-4 gap-2 ">
-            <button>
-              <img
-                className="border border-gray-300"
-                src="https://cdn.shopify.com/s/files/1/0111/9115/6794/products/1_d38c37e9-3340-4e8d-99ff-72576024cec5.jpg?v=1529643138"
-                alt=""
-              />
-            </button>
-            <button>
-              <img
-                className="border border-gray-300"
-                src="https://cdn.shopify.com/s/files/1/0111/9115/6794/products/1_d38c37e9-3340-4e8d-99ff-72576024cec5.jpg?v=1529643138"
-                alt=""
-              />
-            </button>
-            <button>
-              <img
-                className="border border-gray-300"
-                src="https://cdn.shopify.com/s/files/1/0111/9115/6794/products/1_d38c37e9-3340-4e8d-99ff-72576024cec5.jpg?v=1529643138"
-                alt=""
-              />
-            </button>
-            <button>
-              <img
-                className="border border-gray-300"
-                src="https://cdn.shopify.com/s/files/1/0111/9115/6794/products/1_d38c37e9-3340-4e8d-99ff-72576024cec5.jpg?v=1529643138"
-                alt=""
-              />
-            </button>
+            {product?.gallary_img.map((x) => {
+              return (
+                <button key={x}>
+                  <img className="border border-gray-300" src={x} alt="" />
+                </button>
+              );
+            })}
           </div>
         </div>
         {/* des part */}

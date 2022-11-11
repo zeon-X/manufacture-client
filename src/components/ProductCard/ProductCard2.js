@@ -15,6 +15,10 @@ const ProductCard2 = ({ props }) => {
     stock,
     status,
   } = props;
+  const handlePurchase = () => {
+    localStorage.setItem("purchase", JSON.stringify(props));
+    navigate("/purchase");
+  };
   return (
     <div className="flex lg:flex-row md:flex-row sm:flex-col justify-center items-center py-4 px-2 border border-gray-200">
       <div className="lg:w-6/12 md:w-6/12 sm:w-full flex justify-center items-center ">
@@ -73,10 +77,7 @@ const ProductCard2 = ({ props }) => {
             </svg>
           </button>
           {/* purchase */}
-          <button
-            onClick={() => navigate("/purchase")}
-            className="btn btn-xs btn-circle"
-          >
+          <button onClick={handlePurchase} className="btn btn-xs btn-circle">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
