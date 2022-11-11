@@ -2,15 +2,15 @@ import React from "react";
 
 const ProductCard2 = () => {
   return (
-    <div className="flex justify-center items-center max-h-44 py-4 px-2 border border-gray-200">
-      <div className="w-6/12">
+    <div className="flex lg:flex-row md:flex-row sm:flex-col justify-center items-center py-4 px-2 border border-gray-200">
+      <div className="lg:w-6/12 md:w-6/12 sm:w-full flex justify-center items-center ">
         <img
-          className="flex justify-center items-center w-24 h-24"
+          className="w-24 h-24"
           src="https://m.media-amazon.com/images/I/71qG13eFwtL.jpg"
           alt="product img"
         />
       </div>
-      <div className="w-6/12 text-sm">
+      <div className="lg:w-6/12 md:w-6/12 sm:w-full text-sm flex flex-col justify-center lg:items-start md:items-start sm:items-center">
         <p className="font-semibold">Las Hot Palabras</p>
         <p>$600.90/Unit</p>
         <p>MCQ: 1000</p>
@@ -42,7 +42,7 @@ const ProductCard2 = () => {
             className="mask mask-star-2 bg-orange-400"
           />
         </div>
-        <div className="gap-3 mt-1 flex">
+        <div className="gap-3 mt-1 flex flex-row">
           <button className="btn btn-xs btn-circle">
             <svg
               xmlns="http://www.w3.org/2000/svg"

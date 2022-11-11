@@ -40,7 +40,7 @@ const ProductCard1 = () => {
       <p className="my-2">Name</p>
       <p>$600.90</p>
 
-      <div className="justify-evenly gap-1 mt-4 flex">
+      <div className="lg:flex-row sm:flex-col justify-evenly gap-1 mt-4 flex">
         <button className="btn btn-xs btn-accent">
           <svg
             xmlns="http://www.w3.org/2000/svg"
