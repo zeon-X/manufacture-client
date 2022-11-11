@@ -25,7 +25,7 @@ const HomeSection4 = () => {
   return (
     <div className="w-full mb-16">
       {/* DELIVERY | 24SUPPORT | MONEY RETURN |DISCOUNT */}
-      <div className="grid lg:grid-cols-4 sm:grid-cols-1 justify-center items-center gap-4 border border-gray-300 p-2">
+      <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 justify-center items-center gap-4 border border-gray-300 p-2">
         <div className=" flex justify-center items-center py-4">
           <img
             className="w-16 mr-4"
@@ -116,7 +116,7 @@ const HomeSection4 = () => {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-4 sm:grid-cols-1">
+        <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
           <ProductCard2></ProductCard2>
           <ProductCard2></ProductCard2>
           <ProductCard2></ProductCard2>
@@ -168,7 +168,7 @@ const HomeSection4 = () => {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-3 sm:grid-cols-1 gap-10">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10">
           {blogData.map((x) => {
             return <BlogCard1 props={x}></BlogCard1>;
           })}

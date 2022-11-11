@@ -1,14 +1,29 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/logo/logo.png";
+import { auth } from "../firebase.init";
+import { useAuthState } from "react-firebase-hooks/auth";
+import Swal from "sweetalert2";
 import "./Header.css";
+import LogoutFunc from "../utilities/Functions/LogoutFunc";
 
 const Header = () => {
   const navigate = useNavigate();
+  const [user, loading, error] = useAuthState(auth);
+  const logout = () => {
+    LogoutFunc(auth);
+    Swal.fire({
+      icon: "success",
+      title: "You account has been logged out",
+      showConfirmButton: false,
+      timer: 1000,
+    });
+  };
+  // console.log(user);
   return (
     <div className="w-full  text-sm  bg-white flex flex-col justify-center items-center">
       {/* Nvabar Top */}
-      <div className="grid lg:grid-cols-3 sm:grid-cols-1 gap-5 justify-center items-center w-full py-3 lg:px-20 sm:px-2">
+      <div className="grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 gap-5 justify-center items-center w-full py-3 lg:px-20 sm:px-2">
         <div className="flex lg:justify-start sm:justify-center items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +72,7 @@ const Header = () => {
       </div>
 
       {/* Navbar Main + sticky */}
-      <div className="main_header sticky top-0 z-50 grid grid-cols-3 navbar w-full border-b border-t border-gray-200 py-5  lg:px-20 sm:px-2">
+      <div className="main_header sticky top-0 z-50 flex justify-evenly items-center navbar w-full border-b border-t border-gray-200 py-5  lg:px-20 sm:px-2">
         {/* menu btn sm */}
         <div className="flex-none lg:hidden">
           <label htmlFor="my-drawer-3" className="btn btn-square btn-ghost">
@@ -77,7 +92,7 @@ const Header = () => {
           </label>
         </div>
         {/* logo */}
-        <div className="navbar-start flex-1 px-2 mx-2">
+        <div className="navbar-start flex lg:justify-start md:justify-end sm:justify-end items-center px-2 mx-2">
           <img
             className="hover:cursor-pointer"
             onClick={() => navigate("/")}
@@ -87,7 +102,7 @@ const Header = () => {
         </div>
         {/* links */}
         <div className="navbar-center flex-none hidden lg:block mx-auto">
-          <ul className="menu menu-horizontal">
+          <ul className="menu menu-horizontal justify-center items-center">
             {/* <!-- Navbar menu content here --> */}
             <li>
               <NavLink to="/">HOME</NavLink>
@@ -108,7 +123,8 @@ const Header = () => {
         </div>
 
         {/* BTN */}
-        <div className="navbar-end grid grid-cols-3 lg:ml-auto lg:gap-2 sm:gap-6  sm:ml-8">
+        <div className="navbar-end flex justify-end gap-0 ">
+          {/* options btn | db |login |reg | my acc */}
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle">
               <div className="indicator">
@@ -133,25 +149,32 @@ const Header = () => {
                 </svg>
               </div>
             </label>
+            {/* options.... */}
             <ul
               tabIndex={0}
               className="mt-3 p-2 shadow-2xl menu menu-compact dropdown-content bg-base-100  border border-gray-100 rounded-box w-52"
             >
-              <li>
-                <a onClick={() => navigate("/login")}>Login</a>
-              </li>
-              <li>
-                <a onClick={() => navigate("/register")}>Register</a>
-              </li>
-              <li>
-                <a
-                  onClick={() => navigate("/dashboard")}
-                  className="justify-between"
-                >
-                  Dashboard
-                  <span className="badge">admin</span>
-                </a>
-              </li>
+              {!user && (
+                <li>
+                  <a onClick={() => navigate("/login")}>Login</a>
+                </li>
+              )}
+              {!user && (
+                <li>
+                  <a onClick={() => navigate("/register")}>Register</a>
+                </li>
+              )}
+              {user && (
+                <li>
+                  <a
+                    onClick={() => navigate("/dashboard")}
+                    className="justify-between"
+                  >
+                    Dashboard
+                    <span className="badge">admin</span>
+                  </a>
+                </li>
+              )}
               <li>
                 <a onClick={() => navigate("/my-account")}>My Account</a>
               </li>
@@ -164,11 +187,14 @@ const Header = () => {
               <li>
                 <a onClick={() => navigate("/checkout")}>Checkout</a>
               </li>
-              <li>
-                <a>Logout</a>
-              </li>
+              {user && (
+                <li>
+                  <a onClick={logout}>Logout</a>
+                </li>
+              )}
             </ul>
           </div>
+          {/* widhlist */}
           <div>
             <button
               onClick={() => navigate("/wishlist")}
@@ -190,6 +216,7 @@ const Header = () => {
               </svg>
             </button>
           </div>
+          {/* cart */}
           <div className="dropdown dropdown-end">
             <label tabIndex={2} className="btn btn-ghost btn-circle">
               <div className="indicator">

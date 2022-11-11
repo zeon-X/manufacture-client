@@ -17,7 +17,7 @@ const Footer = () => {
           Get e-mail updates about our latest shop and special offers.
         </p>
 
-        <div className="form-control w-96">
+        <div className="form-control lg:w-96 sm:w-72">
           <div className="relative">
             <input
               type="text"

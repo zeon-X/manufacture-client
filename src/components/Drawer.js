@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import Footer from "../shared/Footer";
 import Header from "../shared/Header";
 
@@ -25,10 +26,19 @@ const Drawer = ({ children }) => {
           <ul className="menu p-4 w-80 bg-base-100">
             {/* <!-- Sidebar content here --> */}
             <li>
-              <a>Sidebar Item 1</a>
+              <NavLink to="/">HOME</NavLink>
             </li>
             <li>
-              <a>Sidebar Item 2</a>
+              <NavLink to="/about">ABOUT US</NavLink>
+            </li>
+            <li>
+              <NavLink to="/shop">SHOP</NavLink>
+            </li>
+            <li>
+              <NavLink to="/blog">BLOG</NavLink>
+            </li>
+            <li>
+              <NavLink to="/contact">CONTACT US</NavLink>
             </li>
           </ul>
         </div>
