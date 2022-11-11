@@ -7,6 +7,9 @@ import Register from "./pages/LoginRegister/Register";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import Shop from "./pages/Shop/Shop";
 import Blog from "./pages/Blog/Blog";
+import RequireAuth from "./utilities/RequireAuth/RequireAuth";
+import Orders from "./pages/Orders/Orders";
+import ProductDetails1 from "./components/ProductDetails/ProductDetails1";
 
 function App() {
   return (
@@ -57,6 +60,26 @@ function App() {
           element={
             <Drawer>
               <Blog></Blog>
+            </Drawer>
+          }
+        ></Route>
+        <Route
+          path="/orders"
+          element={
+            <Drawer>
+              <RequireAuth>
+                <Orders></Orders>
+              </RequireAuth>
+            </Drawer>
+          }
+        ></Route>
+        <Route
+          path="/purchase"
+          element={
+            <Drawer>
+              <RequireAuth>
+                <ProductDetails1></ProductDetails1>
+              </RequireAuth>
             </Drawer>
           }
         ></Route>

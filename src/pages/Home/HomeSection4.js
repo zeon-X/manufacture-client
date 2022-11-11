@@ -3,6 +3,52 @@ import BlogCard1 from "../../components/BlogCard/BlogCard1";
 import ProductCard2 from "../../components/ProductCard/ProductCard2";
 
 const HomeSection4 = () => {
+  let products = [
+    {
+      img: "https://m.media-amazon.com/images/I/71qG13eFwtL.jpg",
+      title: "Las Hot Palabras",
+      gallary_img: [],
+      unit_price: 1900,
+      description:
+        "Wholesale mobile phone charger dual power adapter fast USB charger Type C 18W PD 20W charger for Iphone 11 12",
+      specification: [{ key: "", value: "" }],
+      mcq: 100,
+      stock: 1000,
+    },
+    {
+      img: "https://www.pngpix.com/wp-content/uploads/2016/07/PNGPIX-COM-Electrical-Tester-Screwdriver-PNG-Transparent-Image.png",
+      title: "Tester Las Hot Palabras",
+      gallary_img: [],
+      unit_price: 10,
+      description:
+        "Wholesale mobile phone charger dual power adapter fast USB charger Type C 18W PD 20W ch",
+      specification: [{ key: "", value: "" }],
+      mcq: 1000,
+      stock: 400000,
+    },
+    {
+      img: "https://www.kleintools.com/sites/all/product_assets/hires/klein/et100_photo.jpg",
+      title: "Multimeter Las Hot Palabras",
+      gallary_img: [],
+      unit_price: 300,
+      description:
+        "Wholesale mobildapter fast USB charger Type C 18W PD 20W ch",
+      specification: [{ key: "", value: "" }],
+      mcq: 500,
+      stock: 10000,
+    },
+    {
+      img: "https://www.kindpng.com/picc/m/181-1811383_framing-hammer-png-download-transparent-background-hammer-png.png",
+      title: "Hammer Las Hot Palabras",
+      gallary_img: [],
+      unit_price: 50,
+      description:
+        "Wholesale mobile phone charger dual power adapter fast USB charger Type C 18W PD 20W chWholesale mobile phone charger dual power adapter fast USB charger Type C 18W PD 20W ch",
+      specification: [{ key: "", value: "" }],
+      mcq: 1000,
+      stock: 1000,
+    },
+  ];
   const blogData = [
     {
       img: "https://cdn.shopify.com/s/files/1/0111/9115/6794/articles/11.jpg?v=1529747940",
@@ -117,14 +163,9 @@ const HomeSection4 = () => {
         </div>
 
         <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
-          <ProductCard2></ProductCard2>
-          <ProductCard2></ProductCard2>
-          <ProductCard2></ProductCard2>
-          <ProductCard2></ProductCard2>
-          <ProductCard2></ProductCard2>
-          <ProductCard2></ProductCard2>
-          <ProductCard2></ProductCard2>
-          <ProductCard2></ProductCard2>
+          {products.map((x) => {
+            return <ProductCard2 key={x.title} props={x}></ProductCard2>;
+          })}
         </div>
       </div>
 

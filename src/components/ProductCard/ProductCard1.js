@@ -1,14 +1,29 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const ProductCard1 = () => {
-  let img = "";
+const ProductCard1 = ({ props }) => {
+  const navigate = useNavigate();
+  const {
+    title,
+    img,
+    gallary_img,
+    unit_price,
+    description,
+    specification,
+    mcq,
+    categories,
+    stock,
+    status,
+  } = props;
+
+  const handlePurchase = () => {
+    localStorage.setItem("purchase", JSON.stringify(props));
+    navigate("/purchase");
+  };
+
   return (
-    <div className="flex flex-col justify-center items-center max-h-96 p-6 border border-gray-200">
-      <img
-        className="w-40 h-40"
-        src="https://m.media-amazon.com/images/I/71qG13eFwtL.jpg"
-        alt="product img"
-      />
+    <div className="flex flex-col justify-center items-center  p-6 border border-gray-200">
+      <img className="w-40 h-40" src={img} alt="product img" />
       <div className="rating rating-xs mt-6">
         <input
           type="radio"
@@ -37,8 +52,11 @@ const ProductCard1 = () => {
           className="mask mask-star-2 bg-orange-400"
         />
       </div>
-      <p className="my-2">Name</p>
-      <p>$600.90</p>
+      <p className="my-2 text-sm text-center">{title}</p>
+      <div className="flex lg:flex-row md:flex-row sm:flex-col  justify-center items-center">
+        <p className="font-bold">${unit_price}/unit</p>
+        <p className="text-xs ml-1">(MCQ: {mcq})</p>
+      </div>
 
       <div className="lg:flex-row sm:flex-col justify-evenly gap-1 mt-4 flex">
         <button className="btn btn-xs btn-accent">
@@ -57,7 +75,9 @@ const ProductCard1 = () => {
             />
           </svg>
         </button>
-        <button className="btn btn-xs btn-accent">Add to Cart</button>
+        <button onClick={handlePurchase} className="btn btn-xs btn-accent">
+          Purchase
+        </button>
         <button className="btn btn-xs btn-accent">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -75,6 +95,10 @@ const ProductCard1 = () => {
           </svg>
         </button>
       </div>
+      <p className="mt-2 text-xs text-center">
+        Available: <span className="font-bold">{stock}</span> pcs
+      </p>
+      <p className="my-1 text-xs text-center">{description.slice(0, 60)}..</p>
     </div>
   );
 };

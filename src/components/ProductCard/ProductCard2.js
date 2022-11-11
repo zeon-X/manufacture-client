@@ -1,19 +1,30 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const ProductCard2 = () => {
+const ProductCard2 = ({ props }) => {
+  const navigate = useNavigate();
+  const {
+    title,
+    img,
+    gallary_img,
+    unit_price,
+    description,
+    specification,
+    mcq,
+    categories,
+    stock,
+    status,
+  } = props;
   return (
     <div className="flex lg:flex-row md:flex-row sm:flex-col justify-center items-center py-4 px-2 border border-gray-200">
       <div className="lg:w-6/12 md:w-6/12 sm:w-full flex justify-center items-center ">
-        <img
-          className="w-24 h-24"
-          src="https://m.media-amazon.com/images/I/71qG13eFwtL.jpg"
-          alt="product img"
-        />
+        <img className="w-24 h-24" src={img} alt="product img" />
       </div>
       <div className="lg:w-6/12 md:w-6/12 sm:w-full text-sm flex flex-col justify-center lg:items-start md:items-start sm:items-center">
-        <p className="font-semibold">Las Hot Palabras</p>
-        <p>$600.90/Unit</p>
-        <p>MCQ: 1000</p>
+        <p className="font-semibold">{title}</p>
+        <p>Price: ${unit_price}/Unit</p>
+        <p>MCQ: {mcq}</p>
+        <p>Available: {stock}</p>
         <div className="rating rating-xs">
           <input
             type="radio"
@@ -42,7 +53,9 @@ const ProductCard2 = () => {
             className="mask mask-star-2 bg-orange-400"
           />
         </div>
-        <div className="gap-3 mt-1 flex flex-row">
+        {/* btn grp */}
+        <div className="gap-3 mt-3 flex flex-row">
+          {/* wishlidt  */}
           <button className="btn btn-xs btn-circle">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +72,11 @@ const ProductCard2 = () => {
               />
             </svg>
           </button>
-          <button className="btn btn-xs btn-circle">
+          {/* purchase */}
+          <button
+            onClick={() => navigate("/purchase")}
+            className="btn btn-xs btn-circle"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -71,10 +88,11 @@ const ProductCard2 = () => {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
               />
             </svg>
           </button>
+          {/* product details */}
           <button className="btn btn-xs btn-circle">
             <svg
               xmlns="http://www.w3.org/2000/svg"

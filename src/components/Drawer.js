@@ -40,6 +40,18 @@ const Drawer = ({ children }) => {
             <li>
               <NavLink to="/contact">CONTACT US</NavLink>
             </li>
+            <li>
+              <NavLink to="/Login">LOGIN</NavLink>
+            </li>
+            <li>
+              <NavLink to="/register">REGISTER</NavLink>
+            </li>
+            <li>
+              <NavLink to="/dashboard">DASHBOARD</NavLink>
+            </li>
+            <li>
+              <NavLink to="/register">LOGOUT</NavLink>
+            </li>
           </ul>
         </div>
       </div>
