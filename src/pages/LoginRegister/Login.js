@@ -39,6 +39,8 @@ const Login = ({ locationfrom }) => {
         .post("auth/reglog", {
           email: user?.user?.email,
           userId: user?.user?.uid,
+          profile_pic: user?.user?.photoURL,
+          name: user?.user?.displayName,
         })
         .then((res) => {
           console.log(res.data);

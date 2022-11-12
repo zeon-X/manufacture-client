@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/logo/logo.png";
 import { auth } from "../firebase.init";
@@ -9,8 +9,11 @@ import LogoutFunc from "../utilities/Functions/LogoutFunc";
 
 const Header = () => {
   const navigate = useNavigate();
-  const [user, loading, error] = useAuthState(auth);
   const userInfo = JSON.parse(localStorage.getItem("user"));
+  // const [userInfo, setUserInfo] = useState({});
+  // useEffect(() => {
+  //   setUserInfo(JSON.parse(localStorage.getItem("user")));
+  // }, []);
   // console.log(userInfo?.role);
   const logout = () => {
     LogoutFunc(auth);
@@ -21,7 +24,7 @@ const Header = () => {
       timer: 1000,
     });
   };
-  // console.log(user);
+  // console.log(userInfo);
   return (
     <div className="w-full  text-sm  bg-white flex flex-col justify-center items-center">
       {/* Nvabar Top */}
@@ -156,48 +159,29 @@ const Header = () => {
               tabIndex={0}
               className="mt-3 p-2 shadow-2xl menu menu-compact dropdown-content bg-base-100  border border-gray-100 rounded-box w-52"
             >
-              {!user && (
+              {!userInfo && (
                 <li>
                   <a onClick={() => navigate("/login")}>Login</a>
                 </li>
               )}
-              {!user && (
+              {!userInfo && (
                 <li>
                   <a onClick={() => navigate("/register")}>Register</a>
                 </li>
               )}
-              {user && userInfo?.role == "admin" && (
+              {userInfo && (
                 <li>
                   <a
                     onClick={() => navigate("/dashboard")}
                     className="justify-between"
                   >
-                    Professional Dashboard
+                    Dashboard
                     <span className="badge">{userInfo?.role}</span>
                   </a>
                 </li>
               )}
-              {user && (
-                <li>
-                  <a onClick={() => navigate("/my-account")}>My Account</a>
-                </li>
-              )}
-              {user && (
-                <li>
-                  <a onClick={() => navigate("/wishlist")}>My Wishlist</a>
-                </li>
-              )}
-              {user && (
-                <li>
-                  <a onClick={() => navigate("/orders")}>My Orders</a>
-                </li>
-              )}
-              {user && userInfo?.role == "user" && (
-                <li>
-                  <a onClick={() => navigate("/reviews")}>My Reviews</a>
-                </li>
-              )}
-              {user && (
+
+              {userInfo && (
                 <li>
                   <a onClick={logout}>Logout</a>
                 </li>

@@ -3,7 +3,7 @@ import React from "react";
 const Review = () => {
   return (
     <div className="flex justify-center items-center">
-      <div className="card w-80 bg-base-100 shadow-xl rounded-none text-sm border border-gray-200 border-dashed">
+      <div className="card w-80 bg-base-100 shadow-xl rounded-none text-sm border border-gray-100 ">
         <div className="avatar mt-6 ml-6">
           <div className="w-24 rounded-full">
             <img src="https://cdn-icons-png.flaticon.com/512/3048/3048122.png" />
@@ -12,7 +12,7 @@ const Review = () => {
         <div className="card-body">
           {/* name + Tick */}
           <div className="flex justify-between items-center">
-            <p className="card-title">MR. Elon Musk</p>
+            <p className="text-sm">MR. Elon Musk</p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -28,7 +28,7 @@ const Review = () => {
           </div>
           {/* Position + Rating */}
           <div className="flex justify-between items-center">
-            <p>CEO Alfa Farma Ltd.</p>
+            <p className="text-xs font-bold">CEO Alfa Farma Ltd.</p>
             <div className="rating rating-xs">
               <input
                 type="radio"
@@ -70,7 +70,9 @@ const Review = () => {
 
             <div className="border-b border-1.5 border-dashed border-gray-200 w-11/12"></div>
           </div>
-          <p>If a dog chews shoes whose shoes does he choose?</p>
+          <p className="text-xs">
+            If a dog chews shoes whose shoes does he choose?
+          </p>
         </div>
       </div>
     </div>

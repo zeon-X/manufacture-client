@@ -30,10 +30,12 @@ const HomeSection5 = () => {
     },
   ];
   return (
-    <div className="mb-16 w-full flex flex-col justify-center items-center border border-dashed border-warning shadow-xl p-10">
+    <div className="mb-16 w-full flex flex-col justify-center items-center rounded-xl border border-dashed border-gray-200 shadow-xl p-10">
       <div className="w-full">
-        <p className="text-3xl font-bold text-center mb-12">Our Achievements</p>
-        <div className="grid gap-10 justify-center items-center grid-cols-5 md:grid-cols-5 sm:grid-cols-2 ">
+        <p className="text-2xl font-bold text-center mb-12 uppercase text-warning">
+          Our Achievement
+        </p>
+        <div className="grid gap-10 justify-center items-center grid-cols-5 md:grid-cols-5 sm:grid-cols-2 mb-10">
           {achievements.map((x) => {
             return <Achievement key={x.cnt} props={x}></Achievement>;
           })}

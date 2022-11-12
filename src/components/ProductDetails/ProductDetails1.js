@@ -1,10 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import ProductCard2 from "../ProductCard/ProductCard2";
+import ProductCard3 from "../ProductCard/ProductCard3";
 
 const ProductDetails1 = () => {
   const navigate = useNavigate();
   const product = JSON.parse(localStorage.getItem("purchase"));
+  const [userInfo, setUserInfo] = useState({});
+  useEffect(() => {
+    setUserInfo(JSON.parse(localStorage.getItem("user")));
+  }, []);
+  const [q, setQ] = useState(0);
+  const [st, setST] = useState(0);
+  const [gt, setGT] = useState(0);
+  const [dc, setDC] = useState(100);
+
+  const {
+    register,
+    resetField,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async (data) => {
+    userInfo?.name ? (data.name = userInfo?.name) : (data.name = "");
+    userInfo?.phone ? (data.phone = userInfo?.phone) : (data.phone = "");
+    userInfo?.email ? (data.email = userInfo?.email) : (data.email = "");
+    console.log(data);
+  };
+
   let products = [
     {
       img: "https://m.media-amazon.com/images/I/71qG13eFwtL.jpg",
@@ -143,23 +169,221 @@ const ProductDetails1 = () => {
             <br /> {product?.description}
           </p>
           <div className="flex justify-start items-center gap-5 mt-14">
-            <input
+            {/* <input
               type="text"
               placeholder="Quantity"
               className="input input-bordered input-primary w-24 max-w-xs rounded-none input-sm"
-            />
-            <button
-              onClick={() => navigate("/purchase")}
+            /> */}
+            <label
+              htmlFor="my-modal-5"
               className="btn btn-sm btn-warning rounded-none text-white"
             >
               Purchase
-            </button>
+            </label>
             <button className="btn btn-sm btn-warning rounded-none text-white">
               Add To Wishlish
             </button>
           </div>
         </div>
       </div>
+
+      {/* MODALLLLLLLLLLL */}
+      {/* The button to open modal */}
+
+      {/* Put this part before </body> tag */}
+      <input type="checkbox" id="my-modal-5" className="modal-toggle" />
+
+      <div className="modal">
+        <div className="modal-box w-11/12 max-w-5xl">
+          <label
+            htmlFor="my-modal-5"
+            className="btn btn-sm btn-circle absolute right-5 top-5"
+          >
+            ✕
+          </label>
+          <h3 className="font-bold text-lg text-center">
+            Fill to purchase The product
+          </h3>
+
+          <p className="p-6">
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <p className="underline text-gray-500 text-sm font-bold">
+                Buyer Information
+              </p>
+              <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3">
+                {/* name */}
+                <div className="form-control w-full max-w-xs">
+                  <label className="label">
+                    <span className="label-text  text-xs">Your Name?</span>
+                  </label>
+                  <input
+                    {...register("name", {
+                      required: userInfo?.name ? false : true,
+                    })}
+                    type="text"
+                    disabled={userInfo?.name ? true : false}
+                    value={userInfo?.name}
+                    placeholder="Type here"
+                    className="input input-bordered  text-xs w-full max-w-xs "
+                  />
+                  <label className="label">
+                    {errors.name && (
+                      <span className="label-text-alt text-sm text-red-500">
+                        This field is required
+                      </span>
+                    )}
+                  </label>
+                </div>
+                {/* phone */}
+                <div className="form-control w-full max-w-xs">
+                  <label className="label">
+                    <span className="label-text  text-xs">Phone Number</span>
+                  </label>
+                  <input
+                    {...register("phone", {
+                      required: userInfo?.phone ? false : true,
+                    })}
+                    type="text"
+                    disabled={userInfo?.phone ? true : false}
+                    value={userInfo?.phone}
+                    placeholder="Type here"
+                    className="input input-bordered  text-xs w-full max-w-xs "
+                  />
+                  <label className="label">
+                    {errors.phone && (
+                      <span className="label-text-alt text-sm text-red-500">
+                        This field is required
+                      </span>
+                    )}
+                  </label>
+                </div>
+                {/* email  */}
+                <div className="form-control w-full max-w-xs">
+                  <label className="label">
+                    <span className="label-text  text-xs">Your Email?</span>
+                  </label>
+                  <input
+                    {...register("email", {
+                      required: userInfo?.email ? false : true,
+                    })}
+                    type="email"
+                    value={userInfo?.email}
+                    disabled={userInfo?.email ? true : false}
+                    placeholder="Type here"
+                    className="input input-bordered  text-xs w-full max-w-xs "
+                  />
+                  <label className="label">
+                    {errors.email && (
+                      <span className="label-text-alt text-sm text-red-500">
+                        This field is required
+                      </span>
+                    )}
+                  </label>
+                </div>
+              </div>
+
+              {/* address  */}
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text  text-xs">Your Address</span>
+                </label>
+                <textarea
+                  {...register("address", {
+                    required: true,
+                  })}
+                  className="textarea textarea-bordered h-24 text-xs"
+                  placeholder="Type Here"
+                ></textarea>
+                <label className="label">
+                  {errors.address && (
+                    <span className="label-text-alt text-sm text-red-500">
+                      This field is required
+                    </span>
+                  )}
+                </label>
+              </div>
+
+              <p className="underline text-gray-500 text-sm font-bold mt-6">
+                Product Information
+              </p>
+
+              <div className="grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 justify-between items-center gap-10 mt-10 ">
+                {/* product info */}
+                <ProductCard3 props={product}></ProductCard3>
+                {/* Quantity Calculating  */}
+                <div className="h-full flex flex-col justify-center items-center ">
+                  <div className="form-control w-full max-w-xs">
+                    <label className="label">
+                      <span className="label-text  text-xs">
+                        Purchase Quantity
+                      </span>
+                    </label>
+                    <input
+                      {...register("quantity", {
+                        required: true,
+                      })}
+                      onChange={(event) => {
+                        setQ(event.target.value);
+                      }}
+                      type="number"
+                      placeholder="Type here"
+                      className="input input-bordered  text-xs w-full max-w-xs "
+                    />
+                    <label className="label">
+                      {errors.quantity && (
+                        <span className="label-text-alt text-sm text-red-500">
+                          This field is required
+                        </span>
+                      )}
+                    </label>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setST(q * product?.unit_price);
+                      setGT(q * product?.unit_price + dc);
+                    }}
+                    className="btn btn-outline  w-full max-w-xs "
+                  >
+                    Calculate Cost
+                  </button>
+                </div>
+                {/* price  calcu*/}
+                <div className=" text-gray-700 border border-gray-300 p-6 px-10 h-full rounded-lg">
+                  <p className="text-lg font-bold underline">Purchase Totals</p>
+                  <div className="text-xs flex justify-between items-center mt-2">
+                    <p>SUBTOTAL:</p>
+                    <p className="text-warning">${st}</p>
+                  </div>
+                  <div className="text-xs flex justify-between items-center">
+                    <p>Delivery Cost:</p>
+                    <p className="text-warning">${dc}</p>
+                  </div>
+                  <div className="text-xs font-semibold flex justify-between items-center  mt-2">
+                    <p>GRAND TOTAL:</p>
+                    <p className="text-warning">${gt}</p>
+                  </div>
+                </div>
+              </div>
+              {/* modal closing btn */}
+              <div className="modal-action justify-center mt-10 mb-8">
+                <label
+                  htmlFor="my-modal-5"
+                  className="btn bg-red-600 border-none"
+                >
+                  Close
+                </label>
+                <input
+                  type="submit"
+                  value="Place Order"
+                  className="btn btn-success"
+                ></input>
+              </div>
+            </form>
+          </p>
+        </div>
+      </div>
+      {/* MODALLLLLLLLLLL */}
+
       {/* eending part */}
       <div className="mt-10  ">
         <table className="border-collapse border border-slate-500 w-full text-sm ">

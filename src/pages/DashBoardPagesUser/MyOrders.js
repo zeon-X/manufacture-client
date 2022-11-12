@@ -1,6 +1,6 @@
 import React from "react";
 
-const Orders = () => {
+const MyOrders = () => {
   let purchase = [
     {
       img: "https://m.media-amazon.com/images/I/71qG13eFwtL.jpg",
@@ -47,11 +47,11 @@ const Orders = () => {
   });
   let grandtotal = subtotal + delivery_charge;
   return (
-    <div className="my-16 lg:px-16 sm:px-4">
-      <p className="text-2xl font-semibold underline ml-4 mb-6">My Orders</p>
+    <div className=" py-6 px-10 w-full">
+      <p className="text-sm font-semibold ">My Orders</p>
       {/* purchase products */}
       <div className="overflow-auto p-4 shadow-xl rounded border border-dashed border-gray-100">
-        <table className="border-collaspe border border-gray-300 w-full ">
+        <table className="border-collaspe text-xs border border-gray-300 w-full ">
           <thead>
             <tr>
               <th className="p-2 border border-gray-300 ">Image</th>
@@ -156,4 +156,4 @@ const Orders = () => {
   );
 };
 
-export default Orders;
+export default MyOrders;
