@@ -1,10 +1,15 @@
+import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import Loading from "../../shared/Loading";
+
+import axiosInstance from "../../utilities/axiosInstance/axiosInstance";
 
 const EditMyProfile = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [education, setEducation] = useState([]);
   const [socialLinks, setSocialLinks] = useState([]);
   const [userInfo, setUserInfo] = useState({});
@@ -36,7 +41,6 @@ const EditMyProfile = () => {
     valueRef.current.value = "";
   };
 
-  const [loading, setLoading] = useState(false);
   // USE FORM --- juice
   const {
     register,
@@ -56,10 +60,59 @@ const EditMyProfile = () => {
     data.socialLinks = socialLinks;
 
     if (data.address.replace(/\s\s+/g, "") === "")
-      data.address = userInfo?.address;
+      data.address = userInfo?.address || "";
     else {
       data.address = data.address.replace(/\s\s+/g, "");
     }
+    if (data.phone.replace(/\s\s+/g, "") === "")
+      data.phone = userInfo?.phone || "";
+    else {
+      data.phone = data.phone.replace(/\s\s+/g, "");
+    }
+
+    //update data here
+    Swal.fire({
+      title: "Are you sure?",
+      text: `You want to update your information?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "red",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .put(
+            `http://localhost:5000/api/user/update?_id=${userInfo?._id}`,
+            data,
+            {
+              headers: {
+                authorization: localStorage.getItem("authorization"),
+              },
+            }
+          )
+          .then((res) => {
+            // console.log(res.data);
+            if (res.status === 200) {
+              localStorage.setItem("user", JSON.stringify(res?.data));
+              Swal.fire(
+                "Congratulations!",
+                `You've updated your profile!`,
+                "success"
+              ).then(() => {
+                navigate("/dashboard/my-account");
+              });
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: res?.response?.data?.message || res?.response?.data,
+              });
+            }
+          });
+      }
+    });
+
     setLoading(false);
 
     console.log(data);
@@ -71,13 +124,13 @@ const EditMyProfile = () => {
   //   console.log(watch("address"));
 
   return (
-    <div className="py-6 px-10 w-full">
+    <div className="py-6 lg:px-10 md:px-10 sm:px-2  w-full">
       <p className="text-sm font-bold mb-6">Update Account</p>
-      <div className="grid w-full gap-6 lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1">
+      <div className="grid w-full gap-6 lg:grid-cols-1 md:grid-cols-1 sm:grid-cols-1">
         {/* edu */}
-        <div className="text-xs">
-          <p className="mb-4">Add Education</p>
-          <div className="flex justify-between gap-5 w-full">
+        <div className="text-xs  border border-gray-300 p-1 border-dashed ">
+          <p className="mb-4 underline">Add Education</p>
+          <div className="flex sm:justify-center md:justify-center lg:justify-between lg:flex-row md:flex-col sm:flex-col gap-5 w-full">
             <input
               ref={eduRef}
               type="text"
@@ -86,28 +139,17 @@ const EditMyProfile = () => {
             />
             <button
               onClick={handleEduChanges}
-              className="btn btn-success btn-circle"
+              className="btn btn-success lg:btn-circle md:btn-wide sm:btn-wide"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="w-4 h-4"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z"
-                  clipRule="evenodd"
-                />
-              </svg>
+              add
             </button>
           </div>
-          <p className="underline my-4">Education Changes</p>
+          <p className=" my-4">Education Changes</p>
           <div className="">
             <p className="font-bold border border-gray-200 p-1">Education</p>
-            {education?.map((x) => {
+            {education?.map((x, index) => {
               return (
-                <p key={x} className="border border-gray-200 p-1">
+                <p key={index} className="border border-gray-200 p-1">
                   {x}
                 </p>
               );
@@ -115,48 +157,37 @@ const EditMyProfile = () => {
           </div>
         </div>
         {/* social link */}
-        <div className="text-xs">
-          <p className="mb-4">Add SocialLinks</p>
-          <div className="flex justify-between gap-5 w-full">
+        <div className="text-xs border border-gray-300 p-1 border-dashed my-10">
+          <p className="mb-4 underline">Add SocialLinks</p>
+          <div className="flex lg:justify-between md:justify-center sm:justify-center lg:flex-row md:flex-col sm:flex-col gap-5 w-full">
             <input
               ref={mediaRef}
               type="text"
               placeholder="Social Name"
-              className="input input-bordered rounded-none text-xs "
+              className="input input-bordered rounded-none text-xs w-5/12 "
             />
             <input
               ref={valueRef}
               type="text"
               placeholder="Social Link"
-              className="input input-bordered rounded-none text-xs "
+              className="input input-bordered rounded-none text-xs  w-5/12"
             />
             <button
               onClick={handleSocialLinksChanges}
-              className="btn btn-success btn-circle"
+              className="btn btn-success lg:btn-circle sm:btn-wide md:btn-wide"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="w-4 h-4"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z"
-                  clipRule="evenodd"
-                />
-              </svg>
+              add
             </button>
           </div>
-          <p className="underline my-4">SocialLinks Changes</p>
+          <p className=" my-4">SocialLinks Changes</p>
           <div className="">
             <div className="grid grid-cols-2 font-bold ">
               <p className="border border-gray-200 p-1">Social Media</p>
               <p className="border border-gray-200 p-1">Link</p>
             </div>
-            {socialLinks?.map((x) => {
+            {socialLinks?.map((x, index) => {
               return (
-                <div key={x?.value} className="grid grid-cols-2">
+                <div key={index} className="grid grid-cols-2">
                   <p className=" p-1 border border-gray-200">{x?.key}</p>
                   <p className=" p-1 border border-gray-200">{x?.value}</p>
                 </div>
@@ -170,6 +201,19 @@ const EditMyProfile = () => {
         className="flex flex-col items-center justify-center"
         onSubmit={handleSubmit(onSubmit)}
       >
+        <div className="form-control text-xs w-full mt-6">
+          <p className="font-bold">Phone</p>
+          <p className="my-2">Your Current Address : {userInfo?.phone}</p>
+          <p className="font-bold underline mb-2">Update your Phone</p>
+          <input
+            {...register("phone", {
+              required: false,
+            })}
+            value={watch("phone")}
+            className="input input-bordered rounded-none text-xs "
+            placeholder="Type Here"
+          ></input>
+        </div>
         {/* address */}
         <div className="form-control text-xs w-full mt-6">
           <p className="font-bold">Address</p>

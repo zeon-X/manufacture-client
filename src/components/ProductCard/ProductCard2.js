@@ -14,10 +14,10 @@ const ProductCard2 = ({ props }) => {
     categories,
     stock,
     status,
+    _id,
   } = props;
   const handlePurchase = () => {
-    localStorage.setItem("purchase", JSON.stringify(props));
-    navigate("/purchase");
+    navigate(`/purchase?_id=${_id}`);
   };
   return (
     <div className="flex lg:flex-row md:flex-row sm:flex-col justify-center items-center py-4 px-2 border border-gray-200">
@@ -25,7 +25,7 @@ const ProductCard2 = ({ props }) => {
         <img className="w-24 h-24" src={img} alt="product img" />
       </div>
       <div className="lg:w-6/12 md:w-6/12 sm:w-full text-sm flex flex-col justify-center lg:items-start md:items-start sm:items-center">
-        <p className="font-semibold">{title}</p>
+        <p className="font-semibold">{title.slice(0, 30)}..</p>
         <p>Price: ${unit_price}/Unit</p>
         <p>MCQ: {mcq}</p>
         <p>Available: {stock}</p>
@@ -39,7 +39,6 @@ const ProductCard2 = ({ props }) => {
             type="radio"
             name="rating-5"
             className="mask mask-star-2 bg-orange-400"
-            checked
           />
           <input
             type="radio"

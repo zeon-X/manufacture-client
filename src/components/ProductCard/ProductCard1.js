@@ -14,12 +14,14 @@ const ProductCard1 = ({ props }) => {
     categories,
     stock,
     status,
+    _id,
   } = props;
 
   const handlePurchase = () => {
-    localStorage.setItem("purchase", JSON.stringify(props));
-    navigate("/purchase");
+    navigate(`/purchase?_id=${_id}`);
   };
+
+  // console.log(props);
 
   return (
     <div className="flex flex-col justify-center items-center  p-6 border border-gray-200">
@@ -34,7 +36,6 @@ const ProductCard1 = ({ props }) => {
           type="radio"
           name="rating-5"
           className="mask mask-star-2 bg-orange-400"
-          checked
         />
         <input
           type="radio"
@@ -52,7 +53,7 @@ const ProductCard1 = ({ props }) => {
           className="mask mask-star-2 bg-orange-400"
         />
       </div>
-      <p className="my-2 text-sm text-center">{title}</p>
+      <p className="my-2 text-sm text-center">{title.slice(0, 25)}..</p>
       <div className="flex lg:flex-row md:flex-row sm:flex-col  justify-center items-center">
         <p className="font-bold">${unit_price}/unit</p>
         <p className="text-xs ml-1">(MCQ: {mcq})</p>

@@ -1,58 +1,26 @@
 import React from "react";
+import { useQuery } from "react-query";
 import BlogCard1 from "../../components/BlogCard/BlogCard1";
 import ProductCard2 from "../../components/ProductCard/ProductCard2";
+import ErrorPage from "../../shared/ErrorPage";
+import Loading from "../../shared/Loading";
+import axiosInstance from "../../utilities/axiosInstance/axiosInstance";
 
 const HomeSection4 = () => {
-  let products = [
-    {
-      img: "https://m.media-amazon.com/images/I/71qG13eFwtL.jpg",
-      title: "Las Hot Palabras",
-      gallary_img: [
-        "https://m.media-amazon.com/images/I/71qG13eFwtL.jpg",
-        "https://m.media-amazon.com/images/I/71qG13eFwtL.jpg",
-        "https://m.media-amazon.com/images/I/71qG13eFwtL.jpg",
-      ],
-      unit_price: 1900,
-      description:
-        "Wholesale mobile phone charger dual power adapter fast USB charger Type C 18W PD 20W charger for Iphone 11 12",
-      specification: [{ key: "", value: "" }],
-      mcq: 100,
-      stock: 1000,
-    },
-    {
-      img: "https://www.pngpix.com/wp-content/uploads/2016/07/PNGPIX-COM-Electrical-Tester-Screwdriver-PNG-Transparent-Image.png",
-      title: "Tester Las Hot Palabras",
-      gallary_img: [],
-      unit_price: 10,
-      description:
-        "Wholesale mobile phone charger dual power adapter fast USB charger Type C 18W PD 20W ch",
-      specification: [{ key: "", value: "" }],
-      mcq: 1000,
-      stock: 400000,
-    },
-    {
-      img: "https://www.kleintools.com/sites/all/product_assets/hires/klein/et100_photo.jpg",
-      title: "Multimeter Las Hot Palabras",
-      gallary_img: [],
-      unit_price: 300,
-      description:
-        "Wholesale mobildapter fast USB charger Type C 18W PD 20W ch",
-      specification: [{ key: "", value: "" }],
-      mcq: 500,
-      stock: 10000,
-    },
-    {
-      img: "https://www.kindpng.com/picc/m/181-1811383_framing-hammer-png-download-transparent-background-hammer-png.png",
-      title: "Hammer Las Hot Palabras",
-      gallary_img: [],
-      unit_price: 50,
-      description:
-        "Wholesale mobile phone charger dual power adapter fast USB charger Type C 18W PD 20W chWholesale mobile phone charger dual power adapter fast USB charger Type C 18W PD 20W ch",
-      specification: [{ key: "", value: "" }],
-      mcq: 1000,
-      stock: 1000,
-    },
-  ];
+  const {
+    isLoading,
+    isError,
+    data: products,
+    error,
+  } = useQuery(["productsec4"], async () => {
+    let fdata = await axiosInstance.get("product/get?limit=4");
+    return fdata.data;
+  });
+
+  if (isError) return <ErrorPage msg={error}></ErrorPage>;
+
+  if (isLoading) return <Loading msg="Loading..."></Loading>;
+
   const blogData = [
     {
       img: "https://cdn.shopify.com/s/files/1/0111/9115/6794/articles/11.jpg?v=1529747940",

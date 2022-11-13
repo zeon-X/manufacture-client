@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useQuery } from "react-query";
+import { useLocation, useNavigate } from "react-router-dom";
+import ErrorPage from "../../shared/ErrorPage";
+import Loading from "../../shared/Loading";
+import axiosInstance from "../../utilities/axiosInstance/axiosInstance";
 import ProductCard2 from "../ProductCard/ProductCard2";
 import ProductCard3 from "../ProductCard/ProductCard3";
+import Swal from "sweetalert2";
 
 const ProductDetails1 = () => {
   const navigate = useNavigate();
-  const product = JSON.parse(localStorage.getItem("purchase"));
+  // const product = JSON.parse(localStorage.getItem("purchase"));
+  const [loading, setLoading] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   useEffect(() => {
     setUserInfo(JSON.parse(localStorage.getItem("user")));
@@ -14,7 +20,26 @@ const ProductDetails1 = () => {
   const [q, setQ] = useState(0);
   const [st, setST] = useState(0);
   const [gt, setGT] = useState(0);
-  const [dc, setDC] = useState(100);
+  const [dc, setDC] = useState(0);
+  const [_id, setId] = useState("");
+
+  const location = useLocation();
+  useEffect(() => {
+    setId(location?.search?.split("=")[1]);
+  }, [location]);
+
+  const {
+    isLoading1,
+    isError1,
+    data: product,
+    error1,
+  } = useQuery(["productdetails", _id], async () => {
+    console.log(_id);
+    let fdata = await axiosInstance.get(
+      `product/find?_id=${location.search.split("=")[1]}`
+    );
+    return fdata.data;
+  });
 
   const {
     register,
@@ -25,81 +50,67 @@ const ProductDetails1 = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    userInfo?.name ? (data.name = userInfo?.name) : (data.name = "");
+    userInfo?.name
+      ? (data.buyer_name = userInfo?.name)
+      : (data.buyer_name = "");
     userInfo?.phone ? (data.phone = userInfo?.phone) : (data.phone = "");
     userInfo?.email ? (data.email = userInfo?.email) : (data.email = "");
-    console.log(data);
+    data.userId = userInfo?._id;
+    data.productId = product?._id;
+    data.amount = product?.unit_price * data.quantity;
+
+    Swal.fire({
+      title: "Place an order?",
+      text: "You will be ordering this product!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "green",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes! Place Order",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setLoading(true);
+        axiosInstance.post("order/create", data).then((res) => {
+          console.log(res.data);
+          if (res.status === 201) {
+            setLoading(false);
+            Swal.fire(
+              "Order Placed!",
+              "To confirm order please make payment",
+              "success"
+            ).then(() => {
+              navigate("/dashboard/my-orders");
+            });
+          } else {
+            setLoading(false);
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: res.response.data.message || res.response.data,
+            });
+          }
+        });
+        setLoading(false);
+      }
+    });
+
+    // console.log(data);
   };
 
-  let products = [
-    {
-      img: "https://m.media-amazon.com/images/I/71qG13eFwtL.jpg",
-      title: "Las Hot Palabras",
-      gallary_img: [],
-      unit_price: 1900,
-      description:
-        "Wholesale mobile phone charger dual power adapter fast USB charger Type C 18W PD 20W charger for Iphone 11 12",
-      specification: [{ key: "", value: "" }],
-      mcq: 100,
-      stock: 1000,
-    },
-    {
-      img: "https://www.pngpix.com/wp-content/uploads/2016/07/PNGPIX-COM-Electrical-Tester-Screwdriver-PNG-Transparent-Image.png",
-      title: "Tester Las Hot Palabras",
-      gallary_img: [],
-      unit_price: 10,
-      description:
-        "Wholesale mobile phone charger dual power adapter fast USB charger Type C 18W PD 20W ch",
-      specification: [{ key: "", value: "" }],
-      mcq: 1000,
-      stock: 400000,
-    },
-    {
-      img: "https://www.kleintools.com/sites/all/product_assets/hires/klein/et100_photo.jpg",
-      title: "Multimeter Las Hot Palabras",
-      gallary_img: [],
-      unit_price: 300,
-      description:
-        "Wholesale mobildapter fast USB charger Type C 18W PD 20W ch",
-      specification: [{ key: "", value: "" }],
-      mcq: 500,
-      stock: 10000,
-    },
-    {
-      img: "https://www.kindpng.com/picc/m/181-1811383_framing-hammer-png-download-transparent-background-hammer-png.png",
-      title: "Hammer Las Hot Palabras",
-      gallary_img: [],
-      unit_price: 50,
-      description:
-        "Wholesale mobile phone charger dual power adapter fast USB charger Type C 18W PD 20W chWholesale mobile phone charger dual power adapter fast USB charger Type C 18W PD 20W ch",
-      specification: [{ key: "", value: "" }],
-      mcq: 1000,
-      stock: 1000,
-    },
-  ];
+  const {
+    isLoading,
+    isError,
+    data: products,
+    error,
+  } = useQuery(["productpd1"], async () => {
+    let fdata = await axiosInstance.get("product/get?limit=4");
+    return fdata.data;
+  });
 
-  // const product = {
-  //   img: "https://cdn.shopify.com/s/files/1/0111/9115/6794/products/1_d38c37e9-3340-4e8d-99ff-72576024cec5.jpg?v=1529643138",
-  //   gallary_img: ["", ""],
-  //   title: "Simple Product View",
-  //   unit_price: 10,
-  //   description:
-  //     "Wholesale mobile phone charger dual power adapter fast USB charger Type C 18W PD 20W charger for Iphone 11 12",
-  //   stock: 100000,
-  //   specification: [
-  //     {
-  //       key: "Description",
-  //       value:
-  //         "Lorem Ipsum es simplemente el texto de relleno dleno de las imprentas y archivos de texto. Mañana, a partir de los botones de opción, sino un poco de dolor. Escribir en el frenoLorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Mañana, a partir de los botones de opción, sino un poco de dolor. Escribir en el frenoLorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Mañana, a partir de los botones de opción, sino un poco de dolor. Escribir en el freno",
-  //     },
-  //     {
-  //       key: "Shipping Policy",
-  //       value:
-  //         "Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Mañana, a partir de los botones de opción, sino un poco de dolor. Escribir en el frenoLorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Mañana, a partir de los botones de opción, sino un poco de dolor. Escribir en el frenoLorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Mañana, a partir de los botones de opción, sino un poco de dolor. Escribir en el frenoLorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Mañana, a partir de los botones de opción, sino un poco de dolor. Escribir en el freno",
-  //     },
-  //   ],
-  //   mcq: 1100,
-  // };
+  if (isError || isError1) return <ErrorPage msg={error || error1}></ErrorPage>;
+
+  if (isLoading || isLoading1) return <Loading msg="Loading..."></Loading>;
+  if (loading) return Swal.showLoading();
 
   return (
     <div className="w-full lg:px-20 sm:px-4 my-20">
@@ -109,11 +120,11 @@ const ProductDetails1 = () => {
         <div className="lg:w-5/12 md:w-5/12 sm:w-full flex flex-col gap-6 justify-centers items-center">
           <img
             className="w-auto  border border-gray-300"
-            src={product.img}
+            src={product?.img}
             alt=""
           />
           <div className="grid grid-cols-4 gap-2 ">
-            {product?.gallary_img.map((x) => {
+            {product?.gallary_img?.map((x) => {
               return (
                 <button key={x}>
                   <img className="border border-gray-300" src={x} alt="" />
@@ -217,7 +228,7 @@ const ProductDetails1 = () => {
                     <span className="label-text  text-xs">Your Name?</span>
                   </label>
                   <input
-                    {...register("name", {
+                    {...register("buyer_name", {
                       required: userInfo?.name ? false : true,
                     })}
                     type="text"
@@ -309,7 +320,7 @@ const ProductDetails1 = () => {
 
               <div className="grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 justify-between items-center gap-10 mt-10 ">
                 {/* product info */}
-                <ProductCard3 props={product}></ProductCard3>
+                <ProductCard3 props={product ? product : {}}></ProductCard3>
                 {/* Quantity Calculating  */}
                 <div className="h-full flex flex-col justify-center items-center ">
                   <div className="form-control w-full max-w-xs">
@@ -321,23 +332,27 @@ const ProductDetails1 = () => {
                     <input
                       {...register("quantity", {
                         required: true,
+                        min: product?.mcq,
+                        max: product?.stock,
                       })}
                       onChange={(event) => {
+                        event.preventDefault();
                         setQ(event.target.value);
                       }}
                       type="number"
                       placeholder="Type here"
-                      className="input input-bordered  text-xs w-full max-w-xs "
+                      className="input input-bordered text-xs w-full max-w-xs "
                     />
                     <label className="label">
                       {errors.quantity && (
                         <span className="label-text-alt text-sm text-red-500">
-                          This field is required
+                          Quantity is required. Put a value between{" "}
+                          {product?.mcq} and {product?.stock}.
                         </span>
                       )}
                     </label>
                   </div>
-                  <button
+                  {/* <button
                     onClick={() => {
                       setST(q * product?.unit_price);
                       setGT(q * product?.unit_price + dc);
@@ -345,14 +360,14 @@ const ProductDetails1 = () => {
                     className="btn btn-outline  w-full max-w-xs "
                   >
                     Calculate Cost
-                  </button>
+                  </button> */}
                 </div>
                 {/* price  calcu*/}
                 <div className=" text-gray-700 border border-gray-300 p-6 px-10 h-full rounded-lg">
                   <p className="text-lg font-bold underline">Purchase Totals</p>
                   <div className="text-xs flex justify-between items-center mt-2">
                     <p>SUBTOTAL:</p>
-                    <p className="text-warning">${st}</p>
+                    <p className="text-warning">${q * product?.unit_price}</p>
                   </div>
                   <div className="text-xs flex justify-between items-center">
                     <p>Delivery Cost:</p>
@@ -360,7 +375,7 @@ const ProductDetails1 = () => {
                   </div>
                   <div className="text-xs font-semibold flex justify-between items-center  mt-2">
                     <p>GRAND TOTAL:</p>
-                    <p className="text-warning">${gt}</p>
+                    <p className="text-warning">${q * product?.unit_price}</p>
                   </div>
                 </div>
               </div>

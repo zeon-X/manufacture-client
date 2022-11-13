@@ -10,13 +10,9 @@ import LogoutFunc from "../utilities/Functions/LogoutFunc";
 const Header = () => {
   const navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem("user"));
-  // const [userInfo, setUserInfo] = useState({});
-  // useEffect(() => {
-  //   setUserInfo(JSON.parse(localStorage.getItem("user")));
-  // }, []);
-  // console.log(userInfo?.role);
   const logout = () => {
     LogoutFunc(auth);
+    userInfo = {};
     Swal.fire({
       icon: "success",
       title: "You account has been logged out",

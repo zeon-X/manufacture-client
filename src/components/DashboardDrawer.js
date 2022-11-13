@@ -38,11 +38,11 @@ const DashboardDrawer = () => {
               </li>
             )}
             {/* user links */}
-            {userInfo.role === "user" && (
+            {/* {userInfo.role === "user" && (
               <li>
                 <NavLink to="my-wishlist">My Wishlist</NavLink>
               </li>
-            )}
+            )} */}
             {userInfo.role === "user" && (
               <li>
                 <NavLink to="my-orders">My Orders</NavLink>

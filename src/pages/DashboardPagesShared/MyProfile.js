@@ -1,14 +1,43 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
+import ErrorPage from "../../shared/ErrorPage";
+import Loading from "../../shared/Loading";
+import axiosInstance from "../../utilities/axiosInstance/axiosInstance";
 
 const MyProfile = () => {
   const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState({});
-  useEffect(() => {
-    setUserInfo(JSON.parse(localStorage.getItem("user")));
-  }, []);
+
+  const {
+    isLoading,
+    isError,
+    data: userInfo,
+    error,
+  } = useQuery(["user"], async () => {
+    let fetchedData = await axiosInstance.get(
+      `user/find?_id=${JSON.parse(localStorage.getItem("user"))?._id}`
+    );
+
+    let fetchedReview = await axiosInstance.get(
+      `review/get-by-userId?_id=${
+        JSON.parse(localStorage.getItem("user"))?._id
+      }`
+    );
+    fetchedData.data.review = fetchedReview.data;
+
+    localStorage.setItem("user", JSON.stringify(fetchedData.data));
+    return fetchedData.data;
+  });
+
+  console.log(userInfo);
+
+  if (isError) return <ErrorPage msg={error}></ErrorPage>;
+
+  if (isLoading) return <Loading msg="Loading..."></Loading>;
+
   return (
-    <div className="py-6 px-10 w-full">
+    <div className="py-6 lg:px-10 md:px-10 sm:px-2 w-full">
       <div className="flex justify-between">
         <p className="text-sm font-bold">Account Details</p>
         <button
@@ -30,7 +59,13 @@ const MyProfile = () => {
         <div className="mt-4">
           <div className="avatar">
             <div className="w-24 rounded-full">
-              <img src="https://placeimg.com/192/192/people" />
+              <img
+                src={
+                  userInfo?.profile_pic
+                    ? userInfo?.profile_pic
+                    : "https://placeimg.com/192/192/people"
+                }
+              />
             </div>
           </div>
           <p className="mt-4">Email: {userInfo?.email}</p>
@@ -77,8 +112,17 @@ const MyProfile = () => {
             <div>
               <p className=" text-xs font-bold mb-2 mt-4">My Reviews</p>
               <div className="p-3 border border-gray-300 border-dashed">
-                {userInfo?.review?.map((x) => {
-                  return <p>{x}</p>;
+                <div className="flex text-xs gap-1">
+                  <p className="w-3/12 underline">Rating</p>
+                  <p className="w-9/12 underline">Comment</p>
+                </div>
+                {userInfo?.review?.map((x, index) => {
+                  return (
+                    <div key={index} className="flex text-xs gap-1">
+                      <p className="w-3/12">{x?.rating}</p>
+                      <p className="w-9/12">{x?.comment?.slice(0, 20)}</p>
+                    </div>
+                  );
                 })}
               </div>
             </div>

@@ -37,10 +37,10 @@ const Login = ({ locationfrom }) => {
       setFcnt(1);
       axiosInstance
         .post("auth/reglog", {
-          email: user?.user?.email,
-          userId: user?.user?.uid,
           profile_pic: user?.user?.photoURL,
           name: user?.user?.displayName,
+          email: user?.user?.email,
+          userId: user?.user?.uid,
         })
         .then((res) => {
           console.log(res.data);

@@ -24,6 +24,8 @@ const SocialLogin = ({ locationfrom }) => {
         .post("auth/reglog", {
           email: user.user.email,
           userId: user.user.uid,
+          profile_pic: user?.user?.photoURL,
+          name: user?.user?.displayName,
         })
         .then((res) => {
           if (res?.status === 200) {
@@ -37,7 +39,7 @@ const SocialLogin = ({ locationfrom }) => {
 
             // console.log(res.data.user_data.status);
             setLoading1(false);
-            console.log(res.data);
+            // console.log(res.data);
             localStorage.setItem(
               "authorization",
               `Bearer ${res?.data?.authorization}`
