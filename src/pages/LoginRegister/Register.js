@@ -21,6 +21,7 @@ const Register = () => {
   let navNext =
     location?.search?.split("=")[1] + "=" + location?.search?.split("=")[2] ||
     "/";
+  if (navNext.includes("undefined")) navNext = "/";
 
   const {
     register,
@@ -101,7 +102,7 @@ const Register = () => {
         }
       });
     }
-    setLoading(false);
+    // setLoading(false);
   }, [userData, user]);
 
   if (loading || loading1) {

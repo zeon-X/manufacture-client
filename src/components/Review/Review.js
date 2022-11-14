@@ -1,8 +1,8 @@
 import React from "react";
 
 const Review = ({ props }) => {
-  const { userId, rating, comment, email } = props;
-  console.log(props);
+  const { userId, rating, comment } = props;
+  // console.log(props);
   return (
     <div className="flex justify-center items-center">
       <div className="card w-80 bg-base-100 shadow-xl rounded-none text-sm border border-gray-100 ">
@@ -32,35 +32,31 @@ const Review = ({ props }) => {
           <div className="flex justify-between items-center">
             <p className="text-xs font-bold">Consumer {userId?.education[0]}</p>
             <div className="rating rating-xs">
+              <span className="font-semibold mr-1">{rating}</span>
               <input
                 type="radio"
                 name="rating-5"
                 className="mask mask-star-2 bg-orange-400"
-                checked={rating == 1 ? true : false}
               />
               <input
                 type="radio"
                 name="rating-5"
                 className="mask mask-star-2 bg-orange-400"
-                checked={rating == 2 ? true : false}
               />
               <input
                 type="radio"
                 name="rating-5"
                 className="mask mask-star-2 bg-orange-400"
-                checked={rating == 3 ? true : false}
               />
               <input
                 type="radio"
                 name="rating-5"
                 className="mask mask-star-2 bg-orange-400"
-                checked={rating == 4 ? true : false}
               />
               <input
                 type="radio"
                 name="rating-5"
                 className="mask mask-star-2 bg-orange-400"
-                checked={rating == 5 ? true : false}
               />
             </div>
           </div>

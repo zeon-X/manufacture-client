@@ -151,7 +151,7 @@ const MyPortfolio = () => {
             <a
               target="_blank"
               className="w-10 h-10 hover:scale-90 transition-all ease-in-out"
-              href=""
+              href="https://github.com/zeon-X"
             >
               <img
                 src="https://cdn-icons-png.flaticon.com/512/4494/4494749.png"
@@ -161,7 +161,7 @@ const MyPortfolio = () => {
             <a
               target="_blank"
               className="w-10 h-10 hover:scale-90 transition-all ease-in-out"
-              href=""
+              href="https://www.linkedin.com/in/zeonx/"
             >
               <img
                 src="https://cdn-icons-png.flaticon.com/512/145/145807.png"
@@ -171,7 +171,7 @@ const MyPortfolio = () => {
             <a
               target="_blank"
               className="w-10 h-10 hover:scale-90 transition-all ease-in-out"
-              href=""
+              href="https://twitter.com/ShefatZeon"
             >
               <img
                 src="https://cdn-icons-png.flaticon.com/512/3670/3670151.png"
@@ -181,7 +181,7 @@ const MyPortfolio = () => {
             <a
               target="_blank"
               className="w-10 h-10 hover:scale-90 transition-all ease-in-out"
-              href=""
+              href="https://www.facebook.com/shefat.zeon.1"
             >
               <img
                 src="https://cdn-icons-png.flaticon.com/512/145/145802.png"

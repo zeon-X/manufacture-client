@@ -71,9 +71,9 @@ const ProductDetails1 = () => {
       if (result.isConfirmed) {
         setLoading(true);
         axiosInstance.post("order/create", data).then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
+          setLoading(false);
           if (res.status === 201) {
-            setLoading(false);
             Swal.fire(
               "Order Placed!",
               "To confirm order please make payment",
@@ -82,7 +82,6 @@ const ProductDetails1 = () => {
               navigate("/dashboard/my-orders");
             });
           } else {
-            setLoading(false);
             Swal.fire({
               icon: "error",
               title: "Error",
@@ -90,7 +89,7 @@ const ProductDetails1 = () => {
             });
           }
         });
-        setLoading(false);
+        // setLoading(false);
       }
     });
 

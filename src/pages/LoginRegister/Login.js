@@ -49,8 +49,8 @@ const Login = () => {
         })
         .then((res) => {
           console.log(res.data);
+          setLoading(false);
           if (res?.status === 200) {
-            setLoading(false);
             Swal.fire({
               position: "center",
               icon: "success",
@@ -71,7 +71,7 @@ const Login = () => {
             LogoutFunc(auth);
           }
         });
-      setLoading(false);
+      // setLoading(false);
     }
   }, [user]);
   if (loading || loading1) {

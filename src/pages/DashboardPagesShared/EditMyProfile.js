@@ -55,7 +55,6 @@ const EditMyProfile = () => {
   });
 
   const onSubmit = async (data) => {
-    setLoading(true);
     data.education = education;
     data.socialLinks = socialLinks;
 
@@ -81,17 +80,11 @@ const EditMyProfile = () => {
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios
-          .put(
-            `http://localhost:5000/api/user/update?_id=${userInfo?._id}`,
-            data,
-            {
-              headers: {
-                authorization: localStorage.getItem("authorization"),
-              },
-            }
-          )
+        setLoading(true);
+        axiosInstance
+          .put(`user/update?_id=${userInfo?._id}`, data)
           .then((res) => {
+            setLoading(false);
             // console.log(res.data);
             if (res.status === 200) {
               localStorage.setItem("user", JSON.stringify(res?.data));
@@ -113,12 +106,12 @@ const EditMyProfile = () => {
       }
     });
 
-    setLoading(false);
+    // setLoading(false);
 
-    console.log(data);
+    // console.log(data);
   };
   if (loading) {
-    return <Loading msg="rendering.."></Loading>;
+    Swal.showLoading();
   }
 
   //   console.log(watch("address"));
@@ -137,12 +130,12 @@ const EditMyProfile = () => {
               placeholder="Type here"
               className="input input-bordered rounded-none text-xs w-11/12"
             />
-            <button
+            <p
               onClick={handleEduChanges}
               className="btn btn-success lg:btn-circle md:btn-wide sm:btn-wide"
             >
               add
-            </button>
+            </p>
           </div>
           <p className=" my-4">Education Changes</p>
           <div className="">
@@ -172,12 +165,12 @@ const EditMyProfile = () => {
               placeholder="Social Link"
               className="input input-bordered rounded-none text-xs  w-5/12"
             />
-            <button
+            <p
               onClick={handleSocialLinksChanges}
               className="btn btn-success lg:btn-circle sm:btn-wide md:btn-wide"
             >
               add
-            </button>
+            </p>
           </div>
           <p className=" my-4">SocialLinks Changes</p>
           <div className="">

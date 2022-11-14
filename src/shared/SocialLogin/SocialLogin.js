@@ -28,6 +28,7 @@ const SocialLogin = ({ navNext }) => {
           name: user?.user?.displayName,
         })
         .then((res) => {
+          setLoading1(false);
           if (res?.status === 200) {
             Swal.fire({
               position: "center",
@@ -38,7 +39,7 @@ const SocialLogin = ({ navNext }) => {
             });
 
             // console.log(res.data.user_data.status);
-            setLoading1(false);
+
             // console.log(res.data);
             localStorage.setItem(
               "authorization",

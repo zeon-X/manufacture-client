@@ -21,7 +21,7 @@ const Shop = () => {
   if (isLoading) return <Loading msg="Loading..."></Loading>;
   return (
     <div className="w-full mb-16 flex flex-col justify-center items-center lg:px-20 py-16 sm:px-8">
-      <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 lg:gap-10 sm:gap-4">
+      <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 lg:gap-10 sm:gap-4">
         {products.map((x, index) => {
           return <ProductCard1 key={index} props={x}></ProductCard1>;
         })}

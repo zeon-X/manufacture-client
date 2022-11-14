@@ -26,12 +26,12 @@ const AddReview = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    setLoading(true);
     data.userId = userInfo?._id;
     data.email = userInfo?.email;
-
+    setLoading(true);
     axiosInstance.post("review/create", data).then((res) => {
       // console.log(res.status);
+      setLoading(false);
       if (res.status === 201) {
         Swal.fire("Congratulations!", `You've added a Review!`, "success").then(
           () => {
@@ -47,13 +47,13 @@ const AddReview = () => {
       }
     });
 
-    setLoading(false);
+    // setLoading(false);
 
     // console.log(data);
   };
 
   if (loading) {
-    return <Loading msg="rendering.."></Loading>;
+    Swal.showLoading();
   }
 
   return (

@@ -10,7 +10,7 @@ import Loading from "./Loading";
 
 const Header = () => {
   const location = useLocation();
-  console.log(location?.pathname === "/dashboard");
+  console.log(location?.pathname?.includes("dashboard"));
   const navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem("user"));
   const [user, loading, error] = useAuthState(auth);
@@ -87,7 +87,7 @@ const Header = () => {
           <label
             htmlFor="dashboardnavigationlinks"
             className={
-              location?.pathname === "/dashboard"
+              location?.pathname?.includes("dashboard")
                 ? "btn btn-circle btn-warning btn-sm drawer-button lg:hidden"
                 : "hidden"
             }

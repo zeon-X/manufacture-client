@@ -107,10 +107,10 @@ const AddAProduct = () => {
       // console.log(res.data);
     });
 
-    setLoading(false);
+    // setLoading(false);
   };
 
-  if (loading === true) return <Loading msg="uploading..."></Loading>;
+  if (loading === true) Swal.showLoading();
 
   return (
     <div className="w-full py-6 lg:px-10 md:px-10 sm:px-2 ">
