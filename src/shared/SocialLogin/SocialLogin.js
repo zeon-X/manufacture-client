@@ -6,7 +6,7 @@ import axiosInstance from "../../utilities/axiosInstance/axiosInstance";
 import Swal from "sweetalert2";
 import LogoutFunc from "../../utilities/Functions/LogoutFunc";
 
-const SocialLogin = ({ locationfrom }) => {
+const SocialLogin = ({ navNext }) => {
   const [loading1, setLoading1] = useState(false);
   const [cnt, setCnt] = useState(0);
 
@@ -45,7 +45,7 @@ const SocialLogin = ({ locationfrom }) => {
               `Bearer ${res?.data?.authorization}`
             );
             localStorage.setItem("user", JSON.stringify(res?.data?.user));
-            navigate(locationfrom || "/");
+            navigate(navNext || "/");
           } else {
             LogoutFunc(auth);
           }
@@ -54,7 +54,7 @@ const SocialLogin = ({ locationfrom }) => {
   }, [user]);
 
   if (loading || loading1) {
-    return Swal.showLoading();
+    Swal.showLoading();
   }
 
   return (

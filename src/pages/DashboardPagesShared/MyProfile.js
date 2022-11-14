@@ -1,47 +1,55 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
+import { auth } from "../../firebase.init";
 import ErrorPage from "../../shared/ErrorPage";
 import Loading from "../../shared/Loading";
 import axiosInstance from "../../utilities/axiosInstance/axiosInstance";
 
 const MyProfile = () => {
+  const [user, loading, error2] = useAuthState(auth);
   const navigate = useNavigate();
-
   const {
     isLoading,
     isError,
     data: userInfo,
     error,
-  } = useQuery(["user"], async () => {
-    let fetchedData = await axiosInstance.get(
-      `user/find?_id=${JSON.parse(localStorage.getItem("user"))?._id}`
-    );
-
-    let fetchedReview = await axiosInstance.get(
-      `review/get-by-userId?_id=${
-        JSON.parse(localStorage.getItem("user"))?._id
-      }`
-    );
-    fetchedData.data.review = fetchedReview.data;
-
-    localStorage.setItem("user", JSON.stringify(fetchedData.data));
-    return fetchedData.data;
+  } = useQuery(["userdatafetch"], async () => {
+    let url = `user/find-by-email?email=${user?.email}`;
+    let fetchedData = await axiosInstance.get(url);
+    if (fetchedData?.status === 200)
+      localStorage.setItem("user", JSON.stringify(fetchedData?.data[0]));
+    return fetchedData?.data[0];
   });
 
-  console.log(userInfo);
+  // const userId = ;
+  const {
+    isLoading1,
+    isError1,
+    data: userReview,
+    error1,
+  } = useQuery(["userreviewfetch"], async () => {
+    let url = `review/find-by-email?email=${user?.email}`;
+    let fetchedReview = await axiosInstance.get(url);
+    return fetchedReview?.data;
+  });
 
-  if (isError) return <ErrorPage msg={error}></ErrorPage>;
+  if (isError || isError1) return <ErrorPage msg={"error"}></ErrorPage>;
 
-  if (isLoading) return <Loading msg="Loading..."></Loading>;
+  if (isLoading || loading || isLoading1)
+    return <Loading msg="Loading..."></Loading>;
+
+  const handleEditProfile = () => {
+    navigate("/dashboard/my-account-update");
+  };
 
   return (
     <div className="py-6 lg:px-10 md:px-10 sm:px-2 w-full">
       <div className="flex justify-between">
         <p className="text-sm font-bold">Account Details</p>
         <button
-          onClick={() => navigate("/dashboard/my-account-update")}
+          onClick={handleEditProfile}
           className="btn btn-circle btn-sm btn-outline"
         >
           <svg
@@ -81,8 +89,8 @@ const MyProfile = () => {
           <div>
             <p className=" text-xs font-bold mb-2">Education</p>
             <div className="p-3 text-xs border border-gray-300 border-dashed">
-              {userInfo?.education?.map((x) => {
-                return <p>{x}</p>;
+              {userInfo?.education?.map((x, index) => {
+                return <p key={index}>{x}</p>;
               })}
             </div>
           </div>
@@ -95,9 +103,9 @@ const MyProfile = () => {
           <div>
             <p className=" text-xs font-bold mb-2">Social Links</p>
             <div className="p-3 text-xs border border-gray-300 border-dashed">
-              {userInfo?.socialLinks?.map((x) => {
+              {userInfo?.socialLinks?.map((x, index) => {
                 return (
-                  <div className="flex justify-between">
+                  <div key={index} className="flex justify-between">
                     <p className="font-semibold">{x?.key}</p>
                     <a target="_blank" href={x?.value} className="underline">
                       view profile
@@ -116,7 +124,7 @@ const MyProfile = () => {
                   <p className="w-3/12 underline">Rating</p>
                   <p className="w-9/12 underline">Comment</p>
                 </div>
-                {userInfo?.review?.map((x, index) => {
+                {userReview?.map((x, index) => {
                   return (
                     <div key={index} className="flex text-xs gap-1">
                       <p className="w-3/12">{x?.rating}</p>

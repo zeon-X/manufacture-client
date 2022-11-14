@@ -135,8 +135,8 @@ const HomeSection4 = () => {
         </div>
 
         <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
-          {products.map((x) => {
-            return <ProductCard2 key={x.title} props={x}></ProductCard2>;
+          {products.map((x, index) => {
+            return <ProductCard2 key={index} props={x}></ProductCard2>;
           })}
         </div>
       </div>
@@ -182,8 +182,8 @@ const HomeSection4 = () => {
         </div>
 
         <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10">
-          {blogData.map((x) => {
-            return <BlogCard1 props={x}></BlogCard1>;
+          {blogData.map((x, index) => {
+            return <BlogCard1 props={index}></BlogCard1>;
           })}
         </div>
       </div>

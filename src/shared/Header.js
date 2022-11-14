@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/logo/logo.png";
 import { auth } from "../firebase.init";
-import { useAuthState } from "react-firebase-hooks/auth";
 import Swal from "sweetalert2";
 import "./Header.css";
 import LogoutFunc from "../utilities/Functions/LogoutFunc";
+import { useAuthState } from "react-firebase-hooks/auth";
+import Loading from "./Loading";
 
 const Header = () => {
   const navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem("user"));
+  const [user, loading, error] = useAuthState(auth);
   const logout = () => {
     LogoutFunc(auth);
     userInfo = {};
@@ -20,63 +22,16 @@ const Header = () => {
       timer: 1000,
     });
   };
+  // console.log(user);
   // console.log(userInfo);
+  if (loading) return <Loading msg={"loading..."}></Loading>;
   return (
-    <div className="w-full  text-sm  bg-white flex flex-col justify-center items-center">
-      {/* Nvabar Top */}
-      <div className="grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 gap-5 justify-center items-center w-full py-3 lg:px-20 sm:px-2">
-        <div className="flex lg:justify-start sm:justify-center items-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6 mr-2"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M20.893 13.393l-1.135-1.135a2.252 2.252 0 01-.421-.585l-1.08-2.16a.414.414 0 00-.663-.107.827.827 0 01-.812.21l-1.273-.363a.89.89 0 00-.738 1.595l.587.39c.59.395.674 1.23.172 1.732l-.2.2c-.212.212-.33.498-.33.796v.41c0 .409-.11.809-.32 1.158l-1.315 2.191a2.11 2.11 0 01-1.81 1.025 1.055 1.055 0 01-1.055-1.055v-1.172c0-.92-.56-1.747-1.414-2.089l-.655-.261a2.25 2.25 0 01-1.383-2.46l.007-.042a2.25 2.25 0 01.29-.787l.09-.15a2.25 2.25 0 012.37-1.048l1.178.236a1.125 1.125 0 001.302-.795l.208-.73a1.125 1.125 0 00-.578-1.315l-.665-.332-.091.091a2.25 2.25 0 01-1.591.659h-.18c-.249 0-.487.1-.662.274a.931.931 0 01-1.458-1.137l1.411-2.353a2.25 2.25 0 00.286-.76m11.928 9.869A9 9 0 008.965 3.525m11.928 9.868A9 9 0 118.965 3.525"
-            />
-          </svg>
-          Call Us: +8811223300
-        </div>
-        <div className="flex justify-between items-center border border-gray-400 bg-white max-w-xs mx-auto rounded-3xl p-0">
-          <div className="form-control">
-            <input
-              type="text"
-              placeholder="Search"
-              className="input  w-full rounded-3xl"
-            />
-          </div>
-          <button className="btn btn-warning rounded-l-none rounded-r-3xl">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-          </button>
-        </div>
-        <div className="flex lg:justify-end sm:justify-center items-center">
-          <p className="text-sm ">Dhaka, Bangladesh (BDT)</p>
-        </div>
-      </div>
-
+    <div className="w-full main_header shadow-lg relative text-sm bg-white z-50 flex flex-col justify-center items-center">
       {/* Navbar Main + sticky */}
-      <div className="main_header sticky top-0 z-50 flex justify-evenly items-center navbar w-full border-b border-t border-gray-200 py-5  lg:px-20 sm:px-2">
+      <div className=" bg-white z-50 flex justify-evenly items-center navbar w-full border-b border-t border-gray-200 py-5  lg:px-20 sm:px-2">
         {/* menu btn sm */}
         <div className="flex-none lg:hidden">
-          <label htmlFor="my-drawer-3" className="btn btn-square btn-ghost">
+          <label htmlFor="normalmenusm" className="btn btn-square btn-ghost">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -125,6 +80,25 @@ const Header = () => {
 
         {/* BTN */}
         <div className="navbar-end flex justify-end gap-0 ">
+          <label
+            htmlFor="dashboardnavigationlinks"
+            className="btn btn-circle btn-warning btn-sm drawer-button lg:hidden"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25"
+              />
+            </svg>
+          </label>
           {/* options btn | db |login |reg | my acc */}
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle">
@@ -155,72 +129,40 @@ const Header = () => {
               tabIndex={0}
               className="mt-3 p-2 shadow-2xl menu menu-compact dropdown-content bg-base-100  border border-gray-100 rounded-box w-52"
             >
-              {!userInfo && (
+              {!userInfo && !user && (
                 <li>
                   <a onClick={() => navigate("/login")}>Login</a>
                 </li>
               )}
-              {!userInfo && (
+              {!userInfo && !user && (
                 <li>
                   <a onClick={() => navigate("/register")}>Register</a>
                 </li>
               )}
-              {userInfo && (
+              {user && userInfo && (
                 <li>
                   <a
                     onClick={() => navigate("/dashboard")}
                     className="justify-between"
                   >
                     Dashboard
-                    <span className="badge">{userInfo?.role}</span>
+                    <span className="badge">{user && userInfo?.role}</span>
                   </a>
                 </li>
               )}
 
-              {userInfo && (
+              {user && userInfo && (
                 <li>
                   <a onClick={logout}>Logout</a>
                 </li>
               )}
+              {user && !userInfo && (
+                <li>
+                  <a onClick={logout}>Error Logout</a>
+                </li>
+              )}
             </ul>
           </div>
-          {/* purchase */}
-          {/* <div className="dropdown dropdown-end">
-            <label tabIndex={2} className="btn btn-ghost btn-circle">
-              <div className="indicator">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-5 h-5"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
-                  />
-                </svg>
-
-                <span className="badge badge-sm indicator-item">8</span>
-              </div>
-            </label>
-            <div
-              tabIndex={2}
-              className="mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow-2xl border border-gray-100"
-            >
-              <div className="card-body">
-                <span className="font-bold text-lg">8 Items</span>
-                <span className="text-info">Subtotal: $999</span>
-                <div className="card-actions">
-                  <button className="btn btn-primary btn-block">
-                    View Purchase
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div> */}
         </div>
       </div>
     </div>

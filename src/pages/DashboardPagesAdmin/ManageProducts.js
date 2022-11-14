@@ -98,63 +98,32 @@ const ManageProducts = () => {
                   {/* details */}
                   <td
                     align="center"
-                    className="hover:cursor-pointer p-2 border bg-success border-gray-300 mx-auto content-center"
+                    className=" p-2 border  border-gray-300 mx-auto content-center"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={2.5}
-                      stroke="white"
-                      className="w-4 h-4"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
-                      />
-                    </svg>
+                    <button className="btn btn-xs bg-success border-none text-white">
+                      Details
+                    </button>
                   </td>
                   {/* update */}
                   <td
                     align="center"
-                    className="hover:cursor-pointer p-2 border bg-warning border-gray-300 mx-auto content-center"
+                    className="p-2 border  border-gray-300 mx-auto content-center"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={2.5}
-                      stroke="white"
-                      className="w-4 h-4"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                      />
-                    </svg>
+                    <button className="btn btn-xs bg-warning border-none text-white">
+                      Update
+                    </button>
                   </td>
                   {/* delete */}
                   <td
-                    onClick={() => handleDeleteProduct(x?._id)}
                     align="center"
-                    className="hover:cursor-pointer p-2 border bg-red-500 border-gray-300 mx-auto content-center"
+                    className="p-2 border border-gray-300 mx-auto content-center text-white"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={3.5}
-                      stroke="white"
-                      className="w-4 h-4"
+                    <button
+                      className="btn btn-xs bg-red-500 border-none "
+                      onClick={() => handleDeleteProduct(x?._id)}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
+                      Delete
+                    </button>
                   </td>
                 </tr>
               );

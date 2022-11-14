@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Loading from "../../shared/Loading";
 import axiosInstance from "../../utilities/axiosInstance/axiosInstance";
@@ -8,11 +8,14 @@ import axiosInstance from "../../utilities/axiosInstance/axiosInstance";
 const AddReview = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const [ratingValue, setRatingValue] = useState(0);
+  // const location = useLocation();
+  // const userdata = JSON.parse(location.search.split("=")[1]);
+  // console.log(location);
   const [userInfo, setUserInfo] = useState({});
   useEffect(() => {
     setUserInfo(JSON.parse(localStorage.getItem("user")));
   }, []);
+  const userdata = {};
 
   const {
     register,
@@ -25,6 +28,7 @@ const AddReview = () => {
   const onSubmit = async (data) => {
     setLoading(true);
     data.userId = userInfo?._id;
+    data.email = userInfo?.email;
 
     axiosInstance.post("review/create", data).then((res) => {
       // console.log(res.status);

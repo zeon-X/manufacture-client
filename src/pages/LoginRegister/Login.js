@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { auth } from "../../firebase.init";
 import Loading from "../../shared/Loading";
@@ -9,13 +9,18 @@ import SocialLogin from "../../shared/SocialLogin/SocialLogin";
 import axiosInstance from "../../utilities/axiosInstance/axiosInstance";
 import LogoutFunc from "../../utilities/Functions/LogoutFunc";
 
-const Login = ({ locationfrom }) => {
+const Login = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [fcnt, setFcnt] = useState(0);
   const [signInWithEmailAndPassword, user, loading1, error] =
     useSignInWithEmailAndPassword(auth);
   const handleForgetPassword = () => {};
+
+  const location = useLocation();
+  const navNext =
+    location?.state?.from?.pathname + location?.state?.from?.search || "/";
+  console.log(navNext);
 
   const {
     register,
@@ -49,7 +54,7 @@ const Login = ({ locationfrom }) => {
             Swal.fire({
               position: "center",
               icon: "success",
-              title: `Welcome !`,
+              title: `Welcome ${user?.user?.displayName}!`,
               showConfirmButton: true,
               timer: 3000,
             });
@@ -60,7 +65,7 @@ const Login = ({ locationfrom }) => {
               `Bearer ${res?.data?.authorization}`
             );
             localStorage.setItem("user", JSON.stringify(res?.data?.user));
-            navigate(locationfrom || "/");
+            navigate(navNext || "/");
           } else {
             Swal.fire("Error!", `Something went wrong`, "error");
             LogoutFunc(auth);
@@ -110,7 +115,7 @@ const Login = ({ locationfrom }) => {
             />
 
             <label className="label">
-              {errors.email && (
+              {errors?.email && (
                 <span className="label-text-alt text-sm text-red-500">
                   This field is required
                 </span>
@@ -141,7 +146,7 @@ const Login = ({ locationfrom }) => {
             <p>
               Don't have an Account?
               <a
-                onClick={() => navigate("/register")}
+                onClick={() => navigate(`/register?navNext=${navNext}`)}
                 className="underline text-warning hover:cursor-pointer"
               >
                 Register
@@ -169,7 +174,7 @@ const Login = ({ locationfrom }) => {
           />
         </form>
 
-        <SocialLogin></SocialLogin>
+        <SocialLogin navNext={navNext}></SocialLogin>
       </div>
     </div>
   );

@@ -36,8 +36,8 @@ const HomeSection5 = () => {
           Our Achievement
         </p>
         <div className="grid gap-10 justify-center items-center grid-cols-5 md:grid-cols-5 sm:grid-cols-2 mb-10">
-          {achievements.map((x) => {
-            return <Achievement key={x.cnt} props={x}></Achievement>;
+          {achievements.map((x, index) => {
+            return <Achievement key={index} props={x}></Achievement>;
           })}
         </div>
       </div>

@@ -81,7 +81,7 @@ const AddAProduct = () => {
     if (specification.length !== 0) data.specification = specification;
     else data.specification = [];
 
-    console.log(data);
+    // console.log(data);
 
     //SENDING DATA TO MONGO-DB DATABASE
     await axiosInstance.post("product/create", data).then((res) => {
@@ -255,12 +255,12 @@ const AddAProduct = () => {
               placeholder="Value"
               className="input input-bordered rounded-none text-xs  w-full"
             />
-            <button
+            <p
               onClick={handleSpecification}
               className="btn btn-outline w-full rounded-none"
             >
               add
-            </button>
+            </p>
           </div>
           <div className="p-4 bg-slate-100 mt-4 text-black rounded-lg">
             <p className="mb-2 font-semibold">Specification</p>
@@ -303,14 +303,13 @@ const AddAProduct = () => {
             )}
           </div>
         </div>
-
-        {/* submit  */}
         <input
           type="submit"
           value="Upload Product"
           className="btn btn-success btn-wide rounded-none mt-8"
         ></input>
       </form>
+      {/* submit  */}
     </div>
   );
 };

@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import axiosInstance from "../../utilities/axiosInstance/axiosInstance";
 
 const MyOrdersRow = ({ props, changes, increaseChanges }) => {
+  const [btnActive, setBtnActive] = useState(false);
   const { _id, productId, quantity, payment_status } = props;
   const userInfo = JSON.parse(localStorage.getItem("user"));
   //   console.log(props);
@@ -120,7 +121,11 @@ const MyOrdersRow = ({ props, changes, increaseChanges }) => {
       <td align="center" className="mx-auto broder border-gray-300 p-2">
         <button
           onClick={() => handleUpdateOrder(_id)}
-          disabled={q !== quantity ? false : true}
+          disabled={
+            q !== quantity && q > productId.mcq && q < productId.stock
+              ? false
+              : true
+          }
           className="btn btn-circle btn-sm btn-success "
         >
           <svg

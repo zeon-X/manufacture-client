@@ -1,15 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import SocialLogin from "../../shared/SocialLogin/SocialLogin";
 import axiosInstance from "../../utilities/axiosInstance/axiosInstance";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { auth } from "../../firebase.init";
-import {
-  useAuthState,
-  useCreateUserWithEmailAndPassword,
-} from "react-firebase-hooks/auth";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import Loading from "../../shared/Loading";
 
 const Register = () => {
@@ -19,6 +16,11 @@ const Register = () => {
   const [userData, setUserData] = useState({});
   const [fcnt, setFcnt] = useState(0);
   const navigate = useNavigate();
+
+  const location = useLocation();
+  let navNext =
+    location?.search?.split("=")[1] + "=" + location?.search?.split("=")[2] ||
+    "/";
 
   const {
     register,
@@ -92,6 +94,7 @@ const Register = () => {
             resetField("profile_pic");
             resetField("email");
             resetField("phone");
+            navigate(navNext);
           });
         } else {
           Swal.fire("Error!", `Something went wrong`, "error");

@@ -124,9 +124,9 @@ const ProductDetails1 = () => {
             alt=""
           />
           <div className="grid grid-cols-4 gap-2 ">
-            {product?.gallary_img?.map((x) => {
+            {product?.gallary_img?.map((x, index) => {
               return (
-                <button key={x}>
+                <button key={index}>
                   <img className="border border-gray-300" src={x} alt="" />
                 </button>
               );
@@ -148,7 +148,6 @@ const ProductDetails1 = () => {
                 type="radio"
                 name="rating-5"
                 className="mask mask-star-2 bg-orange-400"
-                checked
               />
               <input
                 type="radio"
@@ -411,9 +410,9 @@ const ProductDetails1 = () => {
             </tr>
           </thead>
           <tbody>
-            {product?.specification.map((x) => {
+            {product?.specification.map((x, index) => {
               return (
-                <tr>
+                <tr key={index}>
                   <td className="border border-gray-200 p-4">{x?.key}</td>
                   <td className="border border-gray-200 p-4">{x?.value}</td>
                 </tr>
@@ -464,8 +463,8 @@ const ProductDetails1 = () => {
         </div>
 
         <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-3">
-          {products.map((x) => {
-            return <ProductCard2 key={x.img} props={x}></ProductCard2>;
+          {products.map((x, index) => {
+            return <ProductCard2 key={index} props={x}></ProductCard2>;
           })}
         </div>
       </div>

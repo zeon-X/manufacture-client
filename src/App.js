@@ -20,11 +20,20 @@ import MyWishlist from "./pages/DashBoardPagesUser/MyWishlist";
 import MyOrders from "./pages/DashBoardPagesUser/MyOrders";
 import AddReview from "./pages/DashBoardPagesUser/AddReview";
 import EditMyProfile from "./pages/DashboardPagesShared/EditMyProfile";
+import NotFound from "./shared/NotFound";
 
 function App() {
   return (
-    <div>
+    <div className="relative">
       <Routes>
+        <Route
+          path="*"
+          element={
+            <Drawer>
+              <NotFound></NotFound>
+            </Drawer>
+          }
+        ></Route>
         <Route
           path="/"
           element={
@@ -87,9 +96,11 @@ function App() {
         <Route
           path="/dashboard"
           element={
-            <RequireAuth>
-              <DashboardDrawer></DashboardDrawer>
-            </RequireAuth>
+            <Drawer>
+              <RequireAuth>
+                <DashboardDrawer></DashboardDrawer>
+              </RequireAuth>
+            </Drawer>
           }
         >
           {/* shared */}
@@ -136,6 +147,7 @@ function App() {
               </RequireAuthAndAdmin>
             }
           ></Route>
+          <Route path="*" element={<NotFound></NotFound>}></Route>
         </Route>
       </Routes>
     </div>
