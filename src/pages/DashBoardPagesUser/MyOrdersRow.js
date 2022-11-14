@@ -126,48 +126,22 @@ const MyOrdersRow = ({ props, changes, increaseChanges }) => {
               ? false
               : true
           }
-          className="btn btn-circle btn-sm btn-success "
+          className="btn btn-xs  btn-success "
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={4.5}
-            stroke="white"
-            className="w-4 h-4"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M4.5 12.75l6 6 9-13.5"
-            />
-          </svg>
+          update
         </button>
       </td>
       {/* delete */}
       <td
         align="center"
-        className=" borde border-gray-300 mx-auto content-center p-2"
+        className=" border border-gray-300 mx-auto content-center p-2"
       >
         <button
           onClick={() => handleDeleteOrder(_id)}
           disabled={payment_status === "paid" ? true : false}
-          className="btn btn-circle btn-sm bg-red-500 border-red-500 "
+          className="btn btn-xs bg-red-500 border-red-500 "
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={4.5}
-            stroke="white"
-            className="w-4 h-4"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
+          Cancle
         </button>
       </td>
     </tr>

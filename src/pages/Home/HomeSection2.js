@@ -21,7 +21,7 @@ const HomeSection2 = () => {
   if (isLoading) return <Loading msg="Loading..."></Loading>;
 
   return (
-    <section className="w-full mb-16">
+    <section className="w-full mb-16 ">
       <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 lg:gap-10 sm:gap-4">
         {products.map((x, index) => {
           return <ProductCard1 key={index} props={x}></ProductCard1>;

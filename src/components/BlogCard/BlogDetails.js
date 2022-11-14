@@ -1,7 +1,8 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import BlogCard1 from "../../components/BlogCard/BlogCard1";
 
-const Blog = () => {
+const BlogDetails = () => {
   const blogData = [
     {
       img: "https://process.filestackapi.com/cache=expiry:max/resize=width:600/ZUH1nImOQdSIirQ14lyX",
@@ -41,16 +42,26 @@ const Blog = () => {
       ans: "One should never update the state directly because of the following reasons:If you update it directly, calling the setState() afterward may just replace the update you made. When you directly update the state, it does not change this.state immediately. Instead, it creates a pending state transition, and accessing it after calling this method will only return the present value. You will lose control of the state across all components. ",
     },
   ];
+  const location = useLocation();
+  let id = parseInt(location?.search?.split("=")[1]);
+  console.log(blogData[id]);
+  let blog = blogData[id];
   return (
     <div className="w-full lg:px-20 sm:px-4 my-20">
-      <div className="mt-16">
-        <div className="border border-gray-200 my-6 p-3 flex justify-between items-center">
-          <p className="font-bold">From Our Blogs</p>
+      <div className="my-16 flex lg:flex-row sm:flex-col gap-10">
+        <div className=" w-8/12">
+          <img className="w-full" src={blog?.img} alt="" />
+          <p className="text-sm font-semibold my-6">{blog?.title}...</p>
+          <p className="text-sm">{blog?.ans}</p>
         </div>
 
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10">
+        <div className="grid grid-cols-1 gap-8 w-4/12">
+          <div className="border border-gray-200 p-2 flex ">
+            <p className="font-bold text-xs">Read More From Here</p>
+          </div>
           {blogData.map((x, index) => {
-            return <BlogCard1 key={index} id={index} props={x}></BlogCard1>;
+            if (index != id)
+              return <BlogCard1 key={index} id={index} props={x}></BlogCard1>;
           })}
         </div>
       </div>
@@ -58,4 +69,4 @@ const Blog = () => {
   );
 };
 
-export default Blog;
+export default BlogDetails;

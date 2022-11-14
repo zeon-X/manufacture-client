@@ -49,13 +49,13 @@ const Drawer = ({ children }) => {
               <NavLink to="/about">ABOUT US</NavLink>
             </li>
             <li>
-              <NavLink to="/shop">SHOP</NavLink>
+              <NavLink to="/shop">OUR PRODUCTS</NavLink>
             </li>
             <li>
               <NavLink to="/blog">BLOG</NavLink>
             </li>
             <li>
-              <NavLink to="/contact">CONTACT US</NavLink>
+              <NavLink to="/contact">MY PORTFOLIO</NavLink>
             </li>
 
             {!userInfo && (

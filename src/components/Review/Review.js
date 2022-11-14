@@ -1,18 +1,20 @@
 import React from "react";
 
-const Review = () => {
+const Review = ({ props }) => {
+  const { userId, rating, comment, email } = props;
+  console.log(props);
   return (
     <div className="flex justify-center items-center">
       <div className="card w-80 bg-base-100 shadow-xl rounded-none text-sm border border-gray-100 ">
         <div className="avatar mt-6 ml-6">
           <div className="w-24 rounded-full">
-            <img src="https://cdn-icons-png.flaticon.com/512/3048/3048122.png" />
+            <img src={userId?.profile_pic} />
           </div>
         </div>
         <div className="card-body">
           {/* name + Tick */}
           <div className="flex justify-between items-center">
-            <p className="text-sm">MR. Elon Musk</p>
+            <p className="text-sm">{userId?.name}</p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -28,32 +30,37 @@ const Review = () => {
           </div>
           {/* Position + Rating */}
           <div className="flex justify-between items-center">
-            <p className="text-xs font-bold">CEO Alfa Farma Ltd.</p>
+            <p className="text-xs font-bold">Consumer {userId?.education[0]}</p>
             <div className="rating rating-xs">
               <input
                 type="radio"
                 name="rating-5"
                 className="mask mask-star-2 bg-orange-400"
+                checked={rating == 1 ? true : false}
               />
               <input
                 type="radio"
                 name="rating-5"
                 className="mask mask-star-2 bg-orange-400"
+                checked={rating == 2 ? true : false}
               />
               <input
                 type="radio"
                 name="rating-5"
                 className="mask mask-star-2 bg-orange-400"
+                checked={rating == 3 ? true : false}
               />
               <input
                 type="radio"
                 name="rating-5"
                 className="mask mask-star-2 bg-orange-400"
+                checked={rating == 4 ? true : false}
               />
               <input
                 type="radio"
                 name="rating-5"
                 className="mask mask-star-2 bg-orange-400"
+                checked={rating == 5 ? true : false}
               />
             </div>
           </div>
@@ -69,9 +76,7 @@ const Review = () => {
 
             <div className="border-b border-1.5 border-dashed border-gray-200 w-11/12"></div>
           </div>
-          <p className="text-xs">
-            If a dog chews shoes whose shoes does he choose?
-          </p>
+          <p className="text-xs">{comment}</p>
         </div>
       </div>
     </div>

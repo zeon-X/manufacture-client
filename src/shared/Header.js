@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/logo/logo.png";
 import { auth } from "../firebase.init";
 import Swal from "sweetalert2";
@@ -9,6 +9,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import Loading from "./Loading";
 
 const Header = () => {
+  const location = useLocation();
+  console.log(location?.pathname === "/dashboard");
   const navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem("user"));
   const [user, loading, error] = useAuthState(auth);
@@ -24,7 +26,7 @@ const Header = () => {
   };
   // console.log(user);
   // console.log(userInfo);
-  if (loading) return <Loading msg={"loading..."}></Loading>;
+  // if (loading) return <Loading msg={"loading..."}></Loading>;
   return (
     <div className="w-full main_header shadow-lg relative text-sm bg-white z-50 flex flex-col justify-center items-center">
       {/* Navbar Main + sticky */}
@@ -67,22 +69,28 @@ const Header = () => {
               <NavLink to="/about">ABOUT US</NavLink>
             </li>
             <li>
-              <NavLink to="/shop">SHOP</NavLink>
+              <NavLink to="/shop">OUR PRODUCTS</NavLink>
             </li>
             <li>
               <NavLink to="/blog">BLOG</NavLink>
             </li>
             <li>
-              <NavLink to="/contact">CONTACT US</NavLink>
+              <NavLink to="/contact">MY PORTFOLIO</NavLink>
             </li>
           </ul>
         </div>
 
         {/* BTN */}
         <div className="navbar-end flex justify-end gap-0 ">
+          {/* nav bar */}
+
           <label
             htmlFor="dashboardnavigationlinks"
-            className="btn btn-circle btn-warning btn-sm drawer-button lg:hidden"
+            className={
+              location?.pathname === "/dashboard"
+                ? "btn btn-circle btn-warning btn-sm drawer-button lg:hidden"
+                : "hidden"
+            }
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

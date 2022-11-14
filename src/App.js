@@ -21,6 +21,8 @@ import MyOrders from "./pages/DashBoardPagesUser/MyOrders";
 import AddReview from "./pages/DashBoardPagesUser/AddReview";
 import EditMyProfile from "./pages/DashboardPagesShared/EditMyProfile";
 import NotFound from "./shared/NotFound";
+import BlogDetails from "./components/BlogCard/BlogDetails";
+import MyPortfolio from "./pages/MyPortfolio/MyPortfolio";
 
 function App() {
   return (
@@ -75,10 +77,26 @@ function App() {
           }
         ></Route>
         <Route
+          path="/contact"
+          element={
+            <Drawer>
+              <MyPortfolio></MyPortfolio>
+            </Drawer>
+          }
+        ></Route>
+        <Route
           path="/blog"
           element={
             <Drawer>
               <Blog></Blog>
+            </Drawer>
+          }
+        ></Route>
+        <Route
+          path="/readBlogs"
+          element={
+            <Drawer>
+              <BlogDetails></BlogDetails>
             </Drawer>
           }
         ></Route>
