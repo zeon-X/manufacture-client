@@ -28,6 +28,11 @@ const ProductDetails1 = () => {
     setId(location?.search?.split("=")[1]);
   }, [location]);
 
+  const [imgDis, setImgDis] = useState("");
+  const handleDisImg = (img) => {
+    setImgDis(img);
+  };
+
   const {
     isLoading1,
     isError1,
@@ -38,7 +43,12 @@ const ProductDetails1 = () => {
     let fdata = await axiosInstance.get(
       `product/find?_id=${location.search.split("=")[1]}`
     );
-    return fdata.data;
+    setImgDis(fdata?.data?.img);
+    let returndata = fdata?.data;
+    let gImg = returndata.gallary_img;
+    gImg = [returndata.img, ...gImg];
+    returndata.gallary_img = gImg;
+    return returndata;
   });
 
   const {
@@ -117,15 +127,11 @@ const ProductDetails1 = () => {
       <div className="flex lg:flex-row md:flex-row sm:flex-col justify-start gap-10">
         {/* image part */}
         <div className="lg:w-5/12 md:w-5/12 sm:w-full flex flex-col gap-6 justify-centers items-center">
-          <img
-            className="w-auto  border border-gray-300"
-            src={product?.img}
-            alt=""
-          />
+          <img className="w-auto  border border-gray-300" src={imgDis} alt="" />
           <div className="grid grid-cols-4 gap-2 ">
             {product?.gallary_img?.map((x, index) => {
               return (
-                <button key={index}>
+                <button onClick={() => handleDisImg(x)} key={index}>
                   <img className="border border-gray-300" src={x} alt="" />
                 </button>
               );
