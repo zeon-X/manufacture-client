@@ -1,8 +1,8 @@
+N.B: After successfull Login please "RELOAD" the application in case all the states are working well.
+
 Programming Hero Course Assignment No 12.
 
 This repo contains the Both admin & client site of a Menufacturer Company.
-
-N.B: After successfull Login please "RELOAD" the application in case all the components are working well.
 
 to visit the site [click here!](https://manufacture-web-app.web.app/)
 
