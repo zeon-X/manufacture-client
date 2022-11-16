@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const HomeSection1 = () => {
+  const navigate = useNavigate();
   return (
     <section className="lg:flex w-full gap-10 mb-16">
       {/* main card */}
@@ -14,7 +16,9 @@ const HomeSection1 = () => {
           <p className="text-xs mb-4">
             DEWALT 12 Volt Max 3-8 in Cordless Drill Charger Included
           </p>
-          <button className="btn btn-warning">SHOP NOW</button>
+          <button onClick={() => navigate("/shop")} className="btn btn-warning">
+            SHOP NOW
+          </button>
         </div>
         <div className="lg:order-2 md:order-2 sm:order-1 w-full mb-0 sm:mb-6 flex justify-center">
           <img

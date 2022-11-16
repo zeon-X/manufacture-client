@@ -1,4 +1,5 @@
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { NavLink, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { auth } from "../firebase.init";
@@ -10,6 +11,7 @@ import LogoutFunc from "../utilities/Functions/LogoutFunc";
 const Drawer = ({ children }) => {
   const navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem("user"));
+  const [user, loading, error] = useAuthState(auth);
   const logout = () => {
     LogoutFunc(auth);
     userInfo = {};
@@ -58,31 +60,36 @@ const Drawer = ({ children }) => {
               <NavLink to="/contact">MY PORTFOLIO</NavLink>
             </li>
 
-            {!userInfo && (
+            {!userInfo && !user && (
               <li>
                 <a onClick={() => navigate("/login")}>Login</a>
               </li>
             )}
-            {!userInfo && (
+            {!userInfo && !user && (
               <li>
                 <a onClick={() => navigate("/register")}>Register</a>
               </li>
             )}
-            {userInfo && (
+            {user && userInfo && (
               <li>
                 <a
                   onClick={() => navigate("/dashboard")}
                   className="justify-between"
                 >
                   Dashboard
-                  <span className="badge">{userInfo?.role}</span>
+                  <span className="badge">{user && userInfo?.role}</span>
                 </a>
               </li>
             )}
 
-            {userInfo && (
+            {user && userInfo && (
               <li>
                 <a onClick={logout}>Logout</a>
+              </li>
+            )}
+            {user && !userInfo && (
+              <li>
+                <a onClick={logout}>Error Logout</a>
               </li>
             )}
           </ul>
