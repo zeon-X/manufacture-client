@@ -128,11 +128,11 @@ const EditMyProfile = () => {
               ref={eduRef}
               type="text"
               placeholder="Type here"
-              className="input input-bordered rounded-none text-xs w-11/12"
+              className="input input-bordered rounded-none text-xs lg:w-11/12 md:w-full sm:w-full"
             />
             <p
               onClick={handleEduChanges}
-              className="btn btn-success lg:btn-circle md:btn-wide sm:btn-wide"
+              className="btn btn-success lg:btn-circle md:btn-wide sm:btn-full"
             >
               add
             </p>
@@ -157,17 +157,17 @@ const EditMyProfile = () => {
               ref={mediaRef}
               type="text"
               placeholder="Social Name"
-              className="input input-bordered rounded-none text-xs w-5/12 "
+              className="input input-bordered rounded-none text-xs lg:w-5/12 md:w-full sm:w-full"
             />
             <input
               ref={valueRef}
               type="text"
               placeholder="Social Link"
-              className="input input-bordered rounded-none text-xs  w-5/12"
+              className="input input-bordered rounded-none text-xs  w-5/12 md:w-full sm:w-full"
             />
             <p
               onClick={handleSocialLinksChanges}
-              className="btn btn-success lg:btn-circle sm:btn-wide md:btn-wide"
+              className="btn btn-success lg:btn-circle md:btn-wide sm:btn-full"
             >
               add
             </p>

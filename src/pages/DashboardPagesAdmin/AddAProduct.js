@@ -303,11 +303,13 @@ const AddAProduct = () => {
             )}
           </div>
         </div>
-        <input
-          type="submit"
-          value="Upload Product"
-          className="btn btn-success btn-wide rounded-none mt-8"
-        ></input>
+        <div className="w-full flex justify-center items-center">
+          <input
+            type="submit"
+            value="Upload Product"
+            className="btn btn-success btn-wide rounded-none mt-8"
+          ></input>
+        </div>
       </form>
       {/* submit  */}
     </div>
