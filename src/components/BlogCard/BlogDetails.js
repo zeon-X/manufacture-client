@@ -49,20 +49,22 @@ const BlogDetails = () => {
   return (
     <div className="w-full lg:px-20 sm:px-4 my-20">
       <div className="my-16 flex lg:flex-row sm:flex-col gap-10">
-        <div className="md:w-8/12 sm:w-full lg:w-8/12">
+        <div className="md:w-full sm:w-full lg:w-8/12">
           <img className="w-full" src={blog?.img} alt="" />
           <p className="text-sm font-semibold my-6">{blog?.title}...</p>
           <p className="text-sm">{blog?.ans}</p>
         </div>
 
-        <div className="grid grid-cols-1 gap-8 md:w-4/12 sm:w-full lg:w-4/12">
-          <div className="border border-gray-200 p-2 flex ">
+        <div className="md:w-full sm:w-full lg:w-4/12">
+          <div className="border border-gray-200 p-2 flex my-4">
             <p className="font-bold text-xs">Read More From Here</p>
           </div>
-          {blogData.map((x, index) => {
-            if (index != id)
-              return <BlogCard1 key={index} id={index} props={x}></BlogCard1>;
-          })}
+          <div className="grid lg:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-8 ">
+            {blogData.map((x, index) => {
+              if (index != id)
+                return <BlogCard1 key={index} id={index} props={x}></BlogCard1>;
+            })}
+          </div>
         </div>
       </div>
     </div>
