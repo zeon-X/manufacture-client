@@ -13,13 +13,13 @@ const DashboardDrawer = () => {
   let userInfo = JSON.parse(localStorage.getItem("user"));
   // console.log(userInfo);
   return (
-    <div className="drawer drawer-mobile">
+    <div className="drawer drawer-mobile ">
       <input
         id="dashboardnavigationlinks"
         type="checkbox"
         className="drawer-toggle"
       />
-      <div className="drawer-content flex flex-col items-start justify-start">
+      <div className="drawer-content flex flex-col items-start justify-start w-full">
         {/* <!-- Page content here --> */}
         {/* sm btn to drawer */}
 

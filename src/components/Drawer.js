@@ -31,12 +31,12 @@ const Drawer = ({ children }) => {
           {/* <!-- Navbar --> */}
           <NavbarTop></NavbarTop>
           <Header></Header>
-          <div className="">
+          <div className="max-w-7xl mx-auto w-full">
             {/* <!-- Page content here --> */}
             {children}
             {/* <!-- Footer --> */}
-            <Footer></Footer>
           </div>
+          <Footer></Footer>
         </div>
 
         {/* drawer for mobile */}
